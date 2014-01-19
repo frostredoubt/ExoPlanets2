@@ -358,4 +358,19 @@ public static class Template
         return walls;
     }
 
+	/// <summary>
+	/// Gets the door. Assumes a door exists in each template
+	/// </summary>
+	public static GameObject GetDoor(GameObject template)
+	{
+		foreach (Transform child in template.transform)
+		{
+			if (child.gameObject.tag == "door")
+			{
+				return child.gameObject;
+			}
+		}
+		return null; // Should never get here
+	}
+
 }

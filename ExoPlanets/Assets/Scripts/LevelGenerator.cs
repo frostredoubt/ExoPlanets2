@@ -98,6 +98,7 @@ public class LevelGenerator : MonoBehaviour
         return;
     }
 
+
     /// <summary>
     /// Perform the actual heavy-lifting involved with generating a new level.
     /// </summary>
@@ -293,10 +294,26 @@ public class LevelGenerator : MonoBehaviour
                 {
                     RemoveExitWalls(levelTemplates[i, j], exit);
                 }
+
+				if(levelRequirements[i, j].features.Contains(Template.Feature.Entrance)) {
+					SpawnPlayerAndDoor(levelTemplates[i, j]);
+				}
             }
         }
         return;
     }
+
+	/// <summary>
+	/// Spawns the player and door.
+	/// </summary>
+	private void SpawnPlayerAndDoor(GameObject template)
+	{
+		GameObject door = Template.GetDoor (template);
+		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+
+		player.transform.position = door.transform.position;
+		door.SetActive (true);
+	}
 
     /// <summary>
     /// Remove the walls from an exit on a template.
