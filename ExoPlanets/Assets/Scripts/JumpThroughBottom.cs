@@ -26,6 +26,11 @@ public class JumpThroughBottom : MonoBehaviour {
 		
 	}
 
+	void OnTriggerStay2D(Collider2D coll) {
+		if (coll.gameObject.tag == "Player")
+			through = true;
+	}
+
 	void OnTriggerExit2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Player")
 						through = false;
