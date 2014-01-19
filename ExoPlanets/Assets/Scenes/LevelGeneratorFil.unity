@@ -307,6 +307,18 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6100000, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: a1e42fd043fe34f67a6a1cc6b9f36a5e, type: 2}
+    - target: {fileID: 11400000, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+      propertyPath: Jump_Force
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+      propertyPath: H_Force
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
   m_RootGameObject: {fileID: 800203438}
@@ -541,8 +553,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4008f02550b26d4f85b7007ef06fb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  H_Force: 200
-  Jump_Force: 1000
+  H_Force: 100
+  Jump_Force: 1500
   Max_x_velocity: 20
   CC: {fileID: 0}
 --- !u!61 &800203443
@@ -553,7 +565,7 @@ BoxCollider2D:
   m_PrefabInternal: {fileID: 244192774}
   m_GameObject: {fileID: 800203438}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a1e42fd043fe34f67a6a1cc6b9f36a5e, type: 2}
   m_IsTrigger: 0
   m_Size: {x: 1.94000006, y: 10.2200003}
   m_Center: {x: .0500000007, y: -4.21999979}
