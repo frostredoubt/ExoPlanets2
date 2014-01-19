@@ -54,11 +54,6 @@ public class LevelGenerator : MonoBehaviour
     // Note: These members should be set through the inspector, not the code
 
     /// <summary>
-    /// Assign the empty tile.
-    /// </summary>
-    public GameObject tileEmpty = null;
-
-    /// <summary>
     /// Assign the floor tile.
     /// </summary>
     public GameObject tileFloor = null;
@@ -357,7 +352,7 @@ public class LevelGenerator : MonoBehaviour
 
 	/// <summary>
 	/// Generate the entrance to the level during the level generation cleanup phase.
-	/// </summary>4
+	/// </summary>
     /// <param name="template">The template to spawn the level entrance in.</param>
 	private void GenerateLevelEntrance(GameObject template)
 	{
