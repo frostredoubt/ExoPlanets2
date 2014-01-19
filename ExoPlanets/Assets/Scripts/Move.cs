@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Move : MonoBehaviour {
 
+	public enum FacingDirections {
+		LEFT, RIGHT
+	}
+
     public int H_Force      = 200;
     public int Jump_Force   = 100;
 
@@ -12,6 +16,8 @@ public class Move : MonoBehaviour {
 	public int max_jump_frames;
 	private bool on_ground;
 	private int jumpFrames;
+	private int groundFrames;
+	public FacingDirections facing;
 
     public float Max_x_velocity = (float)20;
 	public float Max_fall_velocity = 10f;
@@ -82,12 +88,27 @@ public class Move : MonoBehaviour {
 	{
 		Vector2 velocity = gameObject.rigidbody2D.velocity;
 		velocity.x = Input.GetAxis("Horizontal") * H_Scale;
+		if (Mathf.Abs (Input.GetAxis ("Horizontal")) > 0.05) {
+			facing = Input.GetAxis("Horizontal") < 0 ? FacingDirections.LEFT : FacingDirections.RIGHT;
+		}
 
 		Transform ground = transform.Find("Ground_collider");
 		on_ground = Physics2D.Linecast(transform.position, ground.position, 1 << LayerMask.NameToLayer("Ground"));
+
+		if (on_ground) {
+			groundFrames = 3;
+		} else {
+			if (groundFrames > 0) {
+				on_ground = true;
+				groundFrames -= 1;
+			}
+		}
+
+
 		if (Jump_down && on_ground) {
 			velocity.y += Jump_Start_Velocity;
 			jumpFrames = max_jump_frames;
+			groundFrames = 0;
 		}
 
 		if (jumpFrames > 0 && Jump_pressed) {

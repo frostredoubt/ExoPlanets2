@@ -18,7 +18,8 @@ public class JumpThroughBottom : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		if (coll.gameObject.tag == "Player") {
+		Vector3 directionToCollider = block.transform.position - coll.transform.position;
+		if (coll.gameObject.tag == "Player" && directionToCollider.y > 0) {
 
 			through = true;
 		}
@@ -27,7 +28,8 @@ public class JumpThroughBottom : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D coll) {
-		if (coll.gameObject.tag == "Player")
+		Vector3 directionToCollider = block.transform.position - coll.transform.position;
+		if (coll.gameObject.tag == "Player" && directionToCollider.y > 0)
 			through = true;
 	}
 
