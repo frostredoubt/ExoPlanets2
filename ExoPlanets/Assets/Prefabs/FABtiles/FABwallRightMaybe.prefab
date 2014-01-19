@@ -66,6 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   possibilities:
   - {fileID: 21300000, guid: d7a0fb2f902f74f20b3b758ec6882a4c, type: 3}
+  - {fileID: 21300000, guid: fbddc6787a1d94b9f81c075daa5d9c81, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
