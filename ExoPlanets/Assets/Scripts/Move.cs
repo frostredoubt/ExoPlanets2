@@ -34,12 +34,19 @@ public class Move : MonoBehaviour {
             Change_character_direction();
         if( Forces.x != 0 )
             Current_direction = Forces.normalized;
+
+        Animator animator = GetComponent<Animator>();
+        Vector2 old_v = rigidbody2D.velocity;
+        old_v.y = 0;
+        animator.SetFloat("Velocity", old_v.magnitude);
     }
 
     void Change_character_direction()
     {
         Vector3 old = transform.localScale;
-        old.x = -old.x;
+        Vector2 old_v = Forces;
+        old_v.y = 0;
+        old.x = old_v.normalized.x;
         transform.localScale = old;
     }
 
