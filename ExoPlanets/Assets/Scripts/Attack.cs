@@ -5,6 +5,8 @@ public class Attack : MonoBehaviour {
 
     private bool Is_fire = false;
     private Vector2 attack_vector;
+    private int cooldown_frames = 0;
+    public int cooldown = 20;
 
     public float Deadzone_x = (float)0.2;
     public float Deadzone_y = (float)0.2;
@@ -56,21 +58,41 @@ public class Attack : MonoBehaviour {
 
         Debug.Log(attack_angle);
 
-        if (Is_fire)
+        if (Is_fire && cooldown_frames == 0)
         {
             Debug.Log("fire");
+            Animator a = GetComponent<Animator>();
             if ((45 < attack_angle) && (attack_angle <= 110))
+            {
+                transform.Find("Attack_cone_up").GetComponent<PolygonCollider2D>().enabled = true;
                 animator.SetBool("up_attack", true);
+                cooldown_frames = cooldown;
+            }
             else if ((250 < attack_angle) && (attack_angle < 325))
+            {
+                transform.Find("Attack_cone_down").GetComponent<PolygonCollider2D>().enabled = true;
                 animator.SetBool("down_attack", true);
+                cooldown_frames = cooldown;
+            }
             else if ((325 < attack_angle) || (attack_angle <= 45))
+            {
+                transform.Find("Attack_cone_forward").GetComponent<PolygonCollider2D>().enabled = true;
                 animator.SetBool("do_attack", true);
+                cooldown_frames = cooldown;
+            }
         }
         else
         {
             animator.SetBool("do_attack", false);
             animator.SetBool("up_attack", false);
             animator.SetBool("down_attack", false);
+        }
+        if (cooldown_frames > 0)
+        {
+            cooldown_frames -= 1;
+            transform.Find("Attack_cone_up").GetComponent<PolygonCollider2D>().enabled = false;
+            transform.Find("Attack_cone_down").GetComponent<PolygonCollider2D>().enabled = false ;
+            transform.Find("Attack_cone_forward").GetComponent<PolygonCollider2D>().enabled = false;
         }
     }
 }
