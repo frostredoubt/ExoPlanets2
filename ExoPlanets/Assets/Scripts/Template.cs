@@ -344,7 +344,7 @@ public static class Template
     /// Return a list of all of the exit tiles of a template.
     /// </summary>
     /// <param name="template">The template to list exit tiles from.</param>
-    /// <returns>A list of all the exit tiles contained in a template.</returns>
+    /// <returns>A list of all the exit tiles contained in a template (which may be empty if none are found).</returns>
     public static List<GameObject> GetExitTiles(GameObject template)
     {
         List<GameObject> walls = new List<GameObject>();
@@ -359,9 +359,11 @@ public static class Template
     }
 
 	/// <summary>
-	/// Gets the door. Assumes a door exists in each template
+	/// Return the tile containing a door element inside a template.
 	/// </summary>
-	public static GameObject GetDoor(GameObject template)
+    /// <param name="template">The template to get the door from.</param>
+    /// <returns>The tile containing the door for a template, or alternatively null if none is found.</returns>
+	public static GameObject GetLevelEntranceTile(GameObject template)
 	{
 		foreach (Transform child in template.transform)
 		{
@@ -370,7 +372,7 @@ public static class Template
 				return child.gameObject;
 			}
 		}
-		return null; // Should never get here
+		return null;
 	}
 
 }
