@@ -735,6 +735,7 @@ MonoBehaviour:
   Jump_Start_Velocity: 4
   Jump_Decay: .5
   max_jump_frames: 8
+  facing: 0
   Max_x_velocity: 20
   Max_fall_velocity: 15
   CC: {fileID: 0}
