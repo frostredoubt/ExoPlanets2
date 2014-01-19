@@ -390,7 +390,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.16938925, y: 1.12332785, z: 0}
+  m_LocalPosition: {x: 1.61163366, y: 2.44070315, z: 0}
   m_LocalScale: {x: .150000006, y: .150000006, z: .150000006}
   m_Children:
   - {fileID: 400008}
@@ -542,10 +542,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
-  m_Mass: 1
-  m_LinearDrag: 4
+  m_Mass: 3
+  m_LinearDrag: .5
   m_AngularDrag: .0500000007
-  m_GravityScale: 4
+  m_GravityScale: 6
   m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -558,7 +558,7 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100012}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a1e42fd043fe34f67a6a1cc6b9f36a5e, type: 2}
   m_IsTrigger: 0
   m_Radius: .75999999
   m_Center: {x: .100000001, y: -9.53999996}
@@ -609,9 +609,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4008f02550b26d4f85b7007ef06fb01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  H_Force: 200
-  Jump_Force: 1200
+  H_Force: 100
+  Jump_Force: 1500
+  H_Scale: 15
+  Jump_Start_Velocity: 4
+  Jump_Decay: .5
+  max_jump_frames: 8
   Max_x_velocity: 20
+  Max_fall_velocity: 15
   CC: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
