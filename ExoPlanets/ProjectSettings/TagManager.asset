@@ -4,18 +4,20 @@
 TagManager:
   tags:
   - 
-  - RBexit
-  - BRexit
-  - BLexit
+  - roomExit
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - LBexit
-  - LMexit
-  - TLexit
-  - TMexit
-  - RMexit
-  - BMexit
-  - TRexit
-  - RTexit
-  - LTexit
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
