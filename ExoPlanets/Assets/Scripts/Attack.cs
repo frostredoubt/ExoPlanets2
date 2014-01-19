@@ -24,8 +24,9 @@ public class Attack : MonoBehaviour {
     void Do_attack()
     {
         if (Is_fire)
-            GetComponent<Animator>().SetBool("do_swing", true);
-        else
-            GetComponent<Animator>().SetBool("do_swing", false);
+        {
+            Debug.Log("go");
+            transform.Find("Weapon").GetComponent<Weapon>().Perform_attack();
+        }
     }
 }

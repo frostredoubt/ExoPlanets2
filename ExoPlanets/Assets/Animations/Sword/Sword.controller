@@ -8,7 +8,7 @@ AnimatorController:
   m_Name: Sword
   serializedVersion: 2
   m_AnimatorParameters:
-  - m_Name: do_swing
+  - m_Name: do_attack
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -34,11 +34,11 @@ Transition:
   m_Name: 
   m_SrcState: {fileID: 110200000}
   m_DstState: {fileID: 110254248}
-  m_TransitionDuration: 5
+  m_TransitionDuration: .0348685496
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: do_swing
+    m_ConditionEvent: do_attack
     m_EventTreshold: 0
     m_ExitTime: 0
   m_Atomic: 1
@@ -56,7 +56,7 @@ Transition:
   m_TransitionOffset: 0
   m_Conditions:
   - m_ConditionMode: 5
-    m_ConditionEvent: do_swing
+    m_ConditionEvent: do_attack
     m_EventTreshold: 0
     m_ExitTime: .99000001
   m_Atomic: 1
@@ -107,13 +107,13 @@ StateMachine:
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
     data:
-      first: {fileID: 110254248}
-      second:
-      - {fileID: 110138847}
-    data:
       first: {fileID: 110200000}
       second:
       - {fileID: 110100000}
+    data:
+      first: {fileID: 110254248}
+      second:
+      - {fileID: 110138847}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: -120, y: -60, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

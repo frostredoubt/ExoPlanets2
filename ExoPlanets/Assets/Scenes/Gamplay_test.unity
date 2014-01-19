@@ -699,9 +699,9 @@ GameObject:
   - 50: {fileID: 940105067}
   - 61: {fileID: 940105065}
   - 114: {fileID: 940105064}
-  - 95: {fileID: 940105066}
   - 58: {fileID: 940105070}
   - 114: {fileID: 940105069}
+  - 95: {fileID: 940105066}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -741,13 +741,12 @@ BoxCollider2D:
 Animator:
   serializedVersion: 2
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 027fc66f0f344c54fae1ef2803599861,
-    type: 2}
-  m_PrefabInternal: {fileID: 1564081538}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 940105063}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: df7f66370c5285c4cb68b24d07c9b62a, type: 2}
+  m_Controller: {fileID: 9100000, guid: ecc6d4a4f176d9247bdc1d1eb757d0cc, type: 2}
   m_CullingMode: 0
   m_ApplyRootMotion: 0
   m_AnimatePhysics: 1
@@ -962,6 +961,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1361721536}
+  - 114: {fileID: 1361721537}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
@@ -981,6 +981,18 @@ Transform:
   m_Children:
   - {fileID: 1828227303}
   m_Father: {fileID: 940105068}
+--- !u!114 &1361721537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1361721535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2430ec3ba2a8edd47b23ab915bd25919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Held_weapon: {fileID: 1828227303}
 --- !u!1001 &1564081538
 Prefab:
   m_ObjectHideFlags: 0
@@ -1028,7 +1040,8 @@ Prefab:
       propertyPath: m_AnimatePhysics
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
   m_RootGameObject: {fileID: 940105063}
   m_IsPrefabParent: 0
@@ -1286,6 +1299,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 1828227303}
   - 212: {fileID: 1828227304}
+  - 61: {fileID: 1828227305}
+  - 95: {fileID: 1828227306}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -1328,6 +1343,31 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: 153d4e42a3ca1ff42ba6befc7e899df4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!61 &1828227305
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1828227302}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Size: {x: 9.56999969, y: .860000014}
+  m_Center: {x: 4.78499985, y: 0}
+--- !u!95 &1828227306
+Animator:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1828227302}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: df7f66370c5285c4cb68b24d07c9b62a, type: 2}
+  m_CullingMode: 0
+  m_ApplyRootMotion: 0
+  m_AnimatePhysics: 1
+  m_HasTransformHierarchy: 1
 --- !u!1 &1873180404
 GameObject:
   m_ObjectHideFlags: 0

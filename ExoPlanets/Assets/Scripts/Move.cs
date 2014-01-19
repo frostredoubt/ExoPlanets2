@@ -56,7 +56,6 @@ public class Move : MonoBehaviour {
         old.y = backup_y;
         old.z = backup_z;
         transform.localScale = old;
-        Debug.Log(old);
     }
 
     void Gather_inputs()

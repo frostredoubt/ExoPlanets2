@@ -33,7 +33,7 @@ AnimationClip:
         value: {x: 0, y: 0, z: .0915016234, w: .995804906}
         inSlope: {x: 0, y: 0, z: -.782080889, w: .0718617439}
         outSlope: {x: 0, y: 0, z: -.782080889, w: .0718617439}
-        tangentMode: 0
+        tangentMode: 1044102076
       - time: .0666666701
         value: {x: 0, y: 0, z: .0784590989, w: .996917307}
         inSlope: {x: 0, y: 0, z: -.782954752, w: .0616210774}
@@ -58,12 +58,12 @@ AnimationClip:
         value: {x: 0, y: 0, z: .0261769425, w: .999657333}
         inSlope: {x: 0, y: 0, z: -.785106659, w: .0205600224}
         outSlope: {x: 0, y: 0, z: -.785106659, w: .0205600224}
-        tangentMode: 352356352
+        tangentMode: 1054168410
       - time: .150000006
         value: {x: 0, y: 0, z: .0130895916, w: .999914348}
         inSlope: {x: 0, y: 0, z: -.78530848, w: .010280014}
         outSlope: {x: 0, y: 0, z: -.78530848, w: .010280014}
-        tangentMode: 352356607
+        tangentMode: 0
       - time: .166666672
         value: {x: 0, y: 0, z: -3.90111499e-09, w: 1}
         inSlope: {x: 0, y: 0, z: -.785375774, w: 0}
@@ -83,7 +83,7 @@ AnimationClip:
         value: {x: 0, y: 0, z: -.0392598175, w: .999229014}
         inSlope: {x: 0, y: 0, z: -.78477025, w: -.0308346786}
         outSlope: {x: 0, y: 0, z: -.78477025, w: -.0308346786}
-        tangentMode: 0
+        tangentMode: 1059481191
       - time: .233333334
         value: {x: 0, y: 0, z: -.0523359589, w: .99862951}
         inSlope: {x: 0, y: 0, z: -.784299552, w: -.0411021747}
@@ -108,7 +108,7 @@ AnimationClip:
         value: {x: 0, y: 0, z: -.104528494, w: .994521916}
         inSlope: {x: 0, y: 0, z: -.781073153, w: -.0820934027}
         outSlope: {x: 0, y: 0, z: -.781073153, w: -.0820934027}
-        tangentMode: 108587008
+        tangentMode: 1063395871
       - time: .316666722
         value: {x: 0, y: 0, z: -.117537439, w: .993068457}
         inSlope: {x: 0, y: 0, z: -.779931903, w: -.0923110023}
@@ -118,10 +118,10 @@ AnimationClip:
         value: {x: 0, y: 0, z: -.1305262, w: .991444886}
         inSlope: {x: 0, y: 0, z: -.77932781, w: -.0974145234}
         outSlope: {x: 0, y: 0, z: -.77932781, w: -.0974145234}
-        tangentMode: 15
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
-    path: Weapon/Sword
+    path: 
   m_CompressedRotationCurves: []
   m_PositionCurves: []
   m_ScaleCurves: []
@@ -142,7 +142,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: m_Enabled
-    path: Weapon/Sword
+    path: 
     classID: 212
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -169,6 +169,25 @@ AnimationClip:
     m_HeightFromFeet: 0
     m_Mirror: 0
   m_EditorCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 31
+      - time: .333333343
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 31
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: m_Enabled
+    path: 
+    classID: 212
+    script: {fileID: 0}
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -280,7 +299,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: m_LocalRotation.x
-    path: Weapon/Sword
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -394,7 +413,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: m_LocalRotation.y
-    path: Weapon/Sword
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -508,7 +527,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: m_LocalRotation.z
-    path: Weapon/Sword
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -622,27 +641,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: m_LocalRotation.w
-    path: Weapon/Sword
+    path: 
     classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 31
-      - time: .333333343
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 31
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-    attribute: m_Enabled
-    path: Weapon/Sword
-    classID: 212
     script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:
@@ -661,7 +661,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: localEulerAnglesBaked.x
-    path: Weapon/Sword
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -680,7 +680,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: localEulerAnglesBaked.y
-    path: Weapon/Sword
+    path: 
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -699,7 +699,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
     attribute: localEulerAnglesBaked.z
-    path: Weapon/Sword
+    path: 
     classID: 4
     script: {fileID: 0}
   m_Events: []
