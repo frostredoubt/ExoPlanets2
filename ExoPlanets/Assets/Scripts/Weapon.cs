@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
-    public Transform Held_weapon;
-
     private bool go_attack = false;
 
 	// Use this for initialization
@@ -16,13 +14,12 @@ public class Weapon : MonoBehaviour {
 	void Update () {
         if (go_attack)
         {
-            Debug.Log("Stuff");
-            Held_weapon.GetComponent<Animator>().SetBool("do_attack", true);
+            transform.GetComponent<Animator>().SetBool("do_attack", true);
             go_attack = false;
         }
         else
         {
-            Held_weapon.GetComponent<Animator>().SetBool("do_attack", false);
+            transform.GetComponent<Animator>().SetBool("do_attack", false);
         }
 	}
 

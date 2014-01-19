@@ -2330,17 +2330,17 @@ AnimationClip:
         value: {x: -.455346346, y: -.053892374, z: 0}
         inSlope: {x: .710064709, y: .130297422, z: 0}
         outSlope: {x: .710064709, y: .130297422, z: 0}
-        tangentMode: 0
+        tangentMode: 111500564
       - time: 1
         value: {x: .535735846, y: .0447473526, z: 0}
         inSlope: {x: .281017482, y: -.0316576958, z: 0}
         outSlope: {x: .281017482, y: -.0316576958, z: 0}
-        tangentMode: 0
+        tangentMode: 257
       - time: 1.5
         value: {x: -.174328879, y: -.0855500698, z: 0}
         inSlope: {x: -1.42012942, y: -.260594845, z: 0}
         outSlope: {x: -1.42012942, y: -.260594845, z: 0}
-        tangentMode: 4
+        tangentMode: 257
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: Player_Torso/Player_Right_Bicept
@@ -2377,22 +2377,22 @@ AnimationClip:
         value: {x: -.174328715, y: -.0855498314, z: 0}
         inSlope: {x: .625890076, y: .11327076, z: 0}
         outSlope: {x: .625890076, y: .11327076, z: 0}
-        tangentMode: 0
+        tangentMode: 1985809549
       - time: .5
         value: {x: .138616323, y: -.0289144516, z: 0}
         inSlope: {x: -.336556286, y: -.164847136, z: 0}
         outSlope: {x: -.336556286, y: -.164847136, z: 0}
-        tangentMode: 111500564
+        tangentMode: 4
       - time: 1
         value: {x: -.510885, y: -.250396967, z: 0}
         inSlope: {x: -.312945038, y: -.0566353798, z: 0}
         outSlope: {x: -.312945038, y: -.0566353798, z: 0}
-        tangentMode: 257
+        tangentMode: 0
       - time: 1.5
         value: {x: -.174328715, y: -.0855498314, z: 0}
         inSlope: {x: .673112571, y: .329694271, z: 0}
         outSlope: {x: .673112571, y: .329694271, z: 0}
-        tangentMode: 257
+        tangentMode: 2
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: Player_Torso/Player_Left_Bicept
@@ -2403,17 +2403,17 @@ AnimationClip:
         value: {x: .0246186554, y: -2.0745821, z: 0}
         inSlope: {x: .172242507, y: .100378036, z: 0}
         outSlope: {x: .172242507, y: .100378036, z: 0}
-        tangentMode: 115361916
+        tangentMode: 0
       - time: .5
         value: {x: .110739909, y: -2.02439308, z: 0}
         inSlope: {x: .0430606268, y: .0250945091, z: 0}
         outSlope: {x: .0430606268, y: .0250945091, z: 0}
-        tangentMode: 114098177
+        tangentMode: 0
       - time: 1.5
         value: {x: .0246186554, y: -2.0745821, z: 0}
         inSlope: {x: -.0861212537, y: -.0501890182, z: 0}
         outSlope: {x: -.0861212537, y: -.0501890182, z: 0}
-        tangentMode: 114098177
+        tangentMode: 113977904
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: Player_Torso/Player_Left_Bicept/Player_Left_Forarm
@@ -2424,22 +2424,41 @@ AnimationClip:
         value: {x: .336842567, y: -1.03062248, z: 0}
         inSlope: {x: -.18915458, y: .120953143, z: 0}
         outSlope: {x: -.18915458, y: .120953143, z: 0}
-        tangentMode: 0
+        tangentMode: 1065353216
       - time: 1
         value: {x: .147687986, y: -.90966934, z: 0}
         inSlope: {x: .0945772901, y: -.0604765713, z: 0}
         outSlope: {x: .0945772901, y: -.0604765713, z: 0}
-        tangentMode: 0
+        tangentMode: 71
       - time: 1.5
         value: {x: .336842567, y: -1.03062248, z: 0}
         inSlope: {x: .37830916, y: -.241906285, z: 0}
         outSlope: {x: .37830916, y: -.241906285, z: 0}
-        tangentMode: 113977904
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: Player_Torso/Player_Right_Bicept/Player_Right_Forarm/Player_Right_Hand
   m_ScaleCurves: []
-  m_FloatCurves: []
+  m_FloatCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: .740000308
+        inSlope: -5.96046448e-07
+        outSlope: -5.96046448e-07
+        tangentMode: 10
+      - time: .5
+        value: .74000001
+        inSlope: -5.96046448e-07
+        outSlope: -5.96046448e-07
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: m_Size.x
+    path: Player_Torso/Player_Right_Bicept/Player_Right_Forarm/Player_Right_Hand/Sword
+    classID: 61
+    script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -12148,6 +12167,25 @@ AnimationClip:
     attribute: m_LocalRotation.w
     path: Player_Torso/Player_Right_Bicept/Player_Right_Forarm/Player_Right_Hand
     classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: .740000308
+        inSlope: -5.96046448e-07
+        outSlope: -5.96046448e-07
+        tangentMode: 10
+      - time: .5
+        value: .74000001
+        inSlope: -5.96046448e-07
+        outSlope: -5.96046448e-07
+        tangentMode: 10
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+    attribute: m_Size.x
+    path: Player_Torso/Player_Right_Bicept/Player_Right_Forarm/Player_Right_Hand/Sword
+    classID: 61
     script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:

@@ -4,6 +4,7 @@ using System.Collections;
 public class Attack : MonoBehaviour {
 
     private bool Is_fire = false;
+    private bool go_attack = false;
 
 	// Use this for initialization
 	void Start () {
@@ -23,10 +24,10 @@ public class Attack : MonoBehaviour {
 
     void Do_attack()
     {
+        Animator animator = GetComponent<Animator>();
         if (Is_fire)
-        {
-            Debug.Log("go");
-            transform.Find("Weapon").GetComponent<Weapon>().Perform_attack();
-        }
+            animator.SetBool("do_attack", true);
+        else
+            animator.SetBool("do_attack", false);
     }
 }
