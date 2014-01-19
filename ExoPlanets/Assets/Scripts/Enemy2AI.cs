@@ -50,7 +50,7 @@ public class Enemy2AI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		Debug.Log (current_state);
+		Animator anim = sprites.GetComponent<Animator> ();
 
 		float direction = (facing == Facing.LEFT) ? -1 : 1;
 
@@ -63,6 +63,8 @@ public class Enemy2AI : MonoBehaviour {
 					current_state = State.PREPARING;
 					preparing_frames = max_preparing_frames;
 			}
+			anim.SetBool("Walk", true);
+			anim.SetBool("Charge", false);
 		} else if (current_state == State.PREPARING) {
 			preparing_frames -= 1;
 
@@ -76,13 +78,19 @@ public class Enemy2AI : MonoBehaviour {
 			if (preparing_frames <= 0) {
 					current_state = State.CHARGING;
 			}
+			anim.SetBool("Walk", true);
+			anim.SetBool("Charge", false);
 		} else if (current_state == State.CHARGING) {
 			gameObject.rigidbody2D.AddForce (new Vector2 (direction * charge_force, 0));
+			anim.SetBool("Walk", false);
+			anim.SetBool("Charge", true);
 		} else if (current_state == State.RECOVERY) {
 			recovery_frames -= 1;
 			if (recovery_frames <= 0) {
 					current_state = State.PACING;
 			}
+			anim.SetBool("Walk", false);
+			anim.SetBool("Charge", false);
 		}
 
 	}
