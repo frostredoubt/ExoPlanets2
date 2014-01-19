@@ -399,4 +399,14 @@ public static class Template
         return GetTaggedChild(template, "door");
 	}
 
+    /// <summary>
+    /// Retrieve a list of all possible exits for a given type of template.
+    /// </summary>
+    /// <param name="template">The template to retrieve the possible exits for.</param>
+    /// <returns>The array of all possible exits allowable for the template.</returns>
+    public static Exit[] GetExitsForTemplate(GameObject template)
+    {
+         return template.GetComponent<TemplateAnnouncement>().supportedExits;
+    }
+
 }

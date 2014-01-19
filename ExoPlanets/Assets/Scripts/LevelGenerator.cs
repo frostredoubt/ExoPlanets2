@@ -61,7 +61,7 @@ public class LevelGenerator : MonoBehaviour
     /// <summary>
     /// The list of level templates that are usable by the generator.
     /// </summary>
-    public GameObject[] usableTemplates = null;
+    public GameObject[] generationTemplates = null;
 
     /// <summary>
     /// The solid template with no open spaces.
@@ -82,12 +82,12 @@ public class LevelGenerator : MonoBehaviour
             Template.exitLookupSet.Add(exit, new HashSet<GameObject>());
         }
 
-        for (int i = 0; i < usableTemplates.Length; i += 1)
+        for (int i = 0; i < generationTemplates.Length; i += 1)
         {
-            TemplateAnnouncement templateAnnouncement = usableTemplates[i].GetComponent<TemplateAnnouncement>();
-            for (int j = 0; j < templateAnnouncement.supportedExits.Length; j += 1)
+            Template.Exit[] supportedExits = Template.GetExitsForTemplate(generationTemplates[i]);
+            for (int j = 0; j < supportedExits.Length; j += 1)
             {
-                Template.exitLookupSet[templateAnnouncement.supportedExits[j]].Add(usableTemplates[i]);
+                Template.exitLookupSet[supportedExits[j]].Add(generationTemplates[i]);
             }
         }
         GenerateLevel();
@@ -114,6 +114,7 @@ public class LevelGenerator : MonoBehaviour
         GenerateLevelWalls(); // Create the walls around the level
         levelRequirements = GenerateBaseRequirements(); // Generate a required path through the level
         GenerateTemplatesFirstPass(Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH); // Create the required tile templates
+        GenerateTemplateSecondPass(Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH); // Create the optional tile templates
         return;
     }
 
@@ -132,13 +133,9 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private void CleanUpLevel()
     {
-        if (levelTemplates == null) // Create and cleanup all the real templates
+        if (levelTemplates != null) // Create and cleanup all the real templates
         {
-            levelTemplates = new GameObject[levelTemplateHeight, levelTemplateWidth];
-        }
-        else
-        {
-            for (int i = 0; i < levelTemplates.GetLength(0); i += 1)
+            for (int i = 0; i < levelTemplates.GetLength(0); i += 1) // Use GetLength to clean up this array of elements, as the levelTemplateHeight and Width have already been reset
             {
                 for (int j = 0; j < levelTemplates.GetLength(1); j += 1)
                 {
@@ -146,6 +143,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
+        levelTemplates = new GameObject[levelTemplateHeight, levelTemplateWidth]; // Create a new array to contain the level objects
 
         if (levelSolidTemplates == null) // Create and cleanup all the additional solid templates that surround the map
         {
@@ -157,6 +155,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 Destroy(levelSolidTemplates[i]);
             }
+            levelSolidTemplates.Clear();
         }
 
         return;
@@ -271,30 +270,30 @@ public class LevelGenerator : MonoBehaviour
     }
 
     /// <summary>
-    /// Generate the templates for the required path through the level.
+    /// Generate the templates for the required path through the level as well as any optional templates.
     /// </summary>
     /// <param name="templateTileHeight">The height of a template in tiles.</param>
     /// <param name="templateTileWidth">The width of a template in tiles.</param>
     private void GenerateTemplatesFirstPass(int templateTileHeight, int templateTileWidth)
     {
-
-        for (int i = 0; i < levelRequirements.GetLength(0); i += 1)
+        for (int i = 0; i < levelTemplateHeight; i += 1)
         {
-
-            for (int j = 0; j < levelRequirements.GetLength(1); j += 1)
+            for (int j = 0; j < levelTemplateWidth; j += 1)
             {
                 GameObject currentTemplate;
                 if (levelRequirements[i, j].exits.Count == 0) // Skip over any non-required tiles for now
                 {
-                    continue;
+                    currentTemplate = generationTemplates[UnityEngine.Random.Range(0, generationTemplates.Length)];
                 }
-
-                List<GameObject> allowableTemplates = Template.GetTemplatesForExits(levelRequirements[i, j].exits);
-                if (allowableTemplates == null || allowableTemplates.Count == 0)
+                else
                 {
-                    throw new Exception("Unable to retrieve a valid template for use in level generation.");
+                    List<GameObject> allowableTemplates = Template.GetTemplatesForExits(levelRequirements[i, j].exits);
+                    if (allowableTemplates == null || allowableTemplates.Count == 0)
+                    {
+                        throw new Exception("Unable to retrieve a valid template for use in level generation.");
+                    }
+                    currentTemplate = allowableTemplates[UnityEngine.Random.Range(0, allowableTemplates.Count)];
                 }
-                currentTemplate = allowableTemplates[UnityEngine.Random.Range(0, allowableTemplates.Count)];
                 levelTemplates[i, j] = InstantiateTemplate(currentTemplate, j, i, templateTileHeight, templateTileWidth);
             }
         }
@@ -318,6 +317,27 @@ public class LevelGenerator : MonoBehaviour
     }
 
     /// <summary>
+    /// Open up all the optional templates to their neighbours, if possible.
+    /// </summary>
+    /// <param name="templateTileHeight">The height of a template in tiles.</param>
+    /// <param name="templateTileWidth">The width of a template in tiles.</param>
+    private void GenerateTemplateSecondPass(int templateTileHeight, int templateTileWidth)
+    {
+        for (int i = 0; i < levelTemplateHeight; i += 1)
+        {
+            for (int j = 0; j < levelTemplateWidth; j += 1) // Generate all the optional templates in the level
+            {
+                if (levelRequirements[i, j].exits.Count != 0) // Skip over any required tiles as they have already been generated
+                {
+                    continue;
+                }
+                //Template.Exit[] supportedExits = Template.GetExitsForTemplate(levelTemplates[i, j]);
+            }
+        }
+        return;
+    }
+
+    /// <summary>
     /// Run the cleanup pass to perform any actions requiring dynamic tiles during level generation.
     /// </summary>
     private void GenerateTemplatesCleanupPass()
@@ -328,7 +348,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 foreach (Template.Exit exit in levelRequirements[i, j].exits) // Remove the required exit walls from the template
                 {
-                    RemoveExitWalls(levelTemplates[i, j], exit);
+                    RemoveExitWall(levelTemplates[i, j], exit);
                 }
 
                 foreach (Template.Feature feature in levelRequirements[i, j].features) // Spawn any necessary features in the room
@@ -368,7 +388,7 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     /// <param name="template">The template to remove the walls from.</param>
     /// <param name="exit">The exit whose walls should be removed from the template.</param>
-    private void RemoveExitWalls(GameObject template, Template.Exit exit)
+    private void RemoveExitWall(GameObject template, Template.Exit exit)
     {
         int exitX = Template.GetExitXComponent(exit), exitY = Template.GetExitYComponent(exit);
         List<GameObject> exitTiles = Template.GetExitTiles(template);
@@ -462,6 +482,56 @@ public class LevelGenerator : MonoBehaviour
                 return tile;
             }
         }
+        return null;
+    }
+
+    /// <summary>
+    /// Get all the possible exits that could reach a neighbour template (if that neighbour in turn also opened its exit).
+    /// </summary>
+    /// <param name="templateX">The X coordinate of the template to get neighbouring exits for.</param>
+    /// <param name="templateY">The Y coordinate of the template to get neighbouring exits for.</param>
+    /// <returns>A HashSet containing all the exits that could reach neighbouring templates if those neighbours also opened their exits.</returns>
+    private HashSet<Template.Exit> GetTemplateNeighbourExits(int templateX, int templateY)
+    {
+        HashSet<Template.Exit> neighbourExits, myExits = new HashSet<Template.Exit>();
+
+        if (templateY > 0) 
+        {
+            neighbourExits = new HashSet<Template.Exit>(Template.GetExitsForTemplate(levelTemplates[templateY - 1, templateX]));
+            neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Top));
+            foreach (Template.Exit exit in neighbourExits)
+            {
+                myExits.Add(Template.GetExitOpposite(exit));
+            }
+        }
+        if (templateX > 0)
+        {
+            neighbourExits = new HashSet<Template.Exit>(Template.GetExitsForTemplate(levelTemplates[templateY, templateX - 1]));
+            neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Right));
+            foreach (Template.Exit exit in neighbourExits)
+            {
+                myExits.Add(Template.GetExitOpposite(exit));
+            }
+        }
+        if (templateX < levelTemplateWidth - 1)
+        {
+            neighbourExits = new HashSet<Template.Exit>(Template.GetExitsForTemplate(levelTemplates[templateY, templateX + 1]));
+            neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Left));
+            foreach (Template.Exit exit in neighbourExits)
+            {
+                myExits.Add(Template.GetExitOpposite(exit));
+            }
+        }
+        if (templateY < levelTemplateHeight - 1)
+        {
+            neighbourExits = new HashSet<Template.Exit>(Template.GetExitsForTemplate(levelTemplates[templateY + 1, templateX]));
+            neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Bottom));
+            foreach (Template.Exit exit in neighbourExits)
+            {
+                myExits.Add(Template.GetExitOpposite(exit));
+            }
+        }
+
         return null;
     }
 
