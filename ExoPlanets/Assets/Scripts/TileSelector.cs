@@ -1,21 +1,25 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class TileSelector : MonoBehaviour {
 
+/// <summary>
+/// Represents a class of tiles that, when initialized in level generation, will randomly select one of a range of sprites.
+/// </summary>
+public class TileSelector : MonoBehaviour
+{
+
+    /// <summary>
+    /// The different sprites that may be used for the tile.
+    /// </summary>
 	public Sprite[] possibilities;
 
-	// Use this for initialization
-	void Start () {
-		int select = Random.Range (0, possibilities.Length);
-		Sprite which = possibilities[select];
-
-		SpriteRenderer sr = GetComponent<SpriteRenderer> ();
-		sr.sprite = which;
+	/// <summary>
+	/// Initialization method that determines the sprite for the tile.
+	/// </summary>
+	void Awake()
+    {
+		Sprite sprite = possibilities[UnityEngine.Random.Range(0, possibilities.Length)];
+		this.GetComponent<SpriteRenderer>().sprite = sprite;
+        return;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
