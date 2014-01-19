@@ -27,10 +27,11 @@ public class Move : MonoBehaviour {
     private bool Jump_pressed;
 	private bool Jump_down;
     private Vector3 Current_direction;
+	private Animator animator;
 
 	// Use this for initialization
 	void Start () {
-
+		animator = GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -88,6 +89,8 @@ public class Move : MonoBehaviour {
 	{
 		Vector2 velocity = gameObject.rigidbody2D.velocity;
 		velocity.x = Input.GetAxis("Horizontal") * H_Scale;
+
+
 		if (Mathf.Abs (Input.GetAxis ("Horizontal")) > 0.05) {
 			facing = Input.GetAxis("Horizontal") < 0 ? FacingDirections.LEFT : FacingDirections.RIGHT;
 		}
@@ -97,6 +100,7 @@ public class Move : MonoBehaviour {
 
 		if (on_ground) {
 			groundFrames = 3;
+			animator.SetBool("jump", false);
 		} else {
 			if (groundFrames > 0) {
 				on_ground = true;
@@ -109,6 +113,7 @@ public class Move : MonoBehaviour {
 			velocity.y += Jump_Start_Velocity;
 			jumpFrames = max_jump_frames;
 			groundFrames = 0;
+			animator.SetBool("jump", true);
 		}
 
 		if (jumpFrames > 0 && Jump_pressed) {
@@ -122,6 +127,7 @@ public class Move : MonoBehaviour {
 
 		gameObject.rigidbody2D.velocity = velocity;
 
+		animator.SetFloat ("Velocity", Mathf.Abs (velocity.x));
 	}
 
     void Apply_forces()

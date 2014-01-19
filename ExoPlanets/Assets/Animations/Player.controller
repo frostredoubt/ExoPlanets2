@@ -375,7 +375,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Player_Jump
-  m_Speed: 1
+  m_Speed: 10
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: f3c2711e94da7a640906c694dc019645, type: 2}
@@ -405,7 +405,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Player_Land
-  m_Speed: 1
+  m_Speed: 8
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: 80ec8d70c0519c5409cd0123fe317e41, type: 2}
@@ -420,7 +420,7 @@ State:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Player_Air
-  m_Speed: 1
+  m_Speed: 5
   m_CycleOffset: 0
   m_Motions:
   - {fileID: 7400000, guid: e151c245cc7ec6d4fbb42acbb5bd2ae0, type: 2}
