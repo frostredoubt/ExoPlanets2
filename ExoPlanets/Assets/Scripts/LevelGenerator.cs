@@ -112,7 +112,7 @@ public class LevelGenerator : MonoBehaviour
         SetLevelSize();
         CleanUpLevel();
         GenerateLevelWalls(); // Create the walls around the level
-        levelRequirements = GenerateBaseRequirements(); // Generate a required path through the level
+        GenerateBaseRequirements(); // Generate a required path through the level
         GenerateTemplatesFirstPass(Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH); // Create the required tile templates
         GenerateTemplateSecondPass(Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH); // Create the optional tile templates
         return;
@@ -181,22 +181,23 @@ public class LevelGenerator : MonoBehaviour
     /// <summary>
     /// Generates a required path through the level and all associated template exits, as well as the level entrance and exit.
     /// </summary>
-    private TemplateRequirementSet[,] GenerateBaseRequirements()
+    private void GenerateBaseRequirements()
     {
-        TemplateRequirementSet[,] templateRequirements = new TemplateRequirementSet[levelTemplateHeight, levelTemplateWidth];
         Template.Direction? lastDirection = null;
         int currentRow = 0, currentColumn = UnityEngine.Random.Range(0, levelTemplateWidth);
+
+        levelRequirements = new TemplateRequirementSet[levelTemplateHeight, levelTemplateWidth];
 
         // Set up new requirement sets for all templates
         for (int i = 0; i < levelTemplateHeight; i += 1)
         {
             for (int j = 0; j < levelTemplateWidth; j += 1)
             {
-                templateRequirements[i, j] = new TemplateRequirementSet();
+                levelRequirements[i, j] = new TemplateRequirementSet();
             }
         }
 
-        templateRequirements[currentRow, currentColumn].features.Add(Template.Feature.Entrance); // Set up the entrance
+        levelRequirements[currentRow, currentColumn].features.Add(Template.Feature.Entrance); // Set up the entrance
 
         while (true)
         {
@@ -205,12 +206,12 @@ public class LevelGenerator : MonoBehaviour
 
             if (moveDirection == null) // If the direction is null, then we should be placing an exit and ending
             {
-                templateRequirements[currentRow, currentColumn].features.Add(Template.Feature.Exit);
-                return templateRequirements;
+                levelRequirements[currentRow, currentColumn].features.Add(Template.Feature.Exit);
+                return;
             }
 
             templateExit = Template.GetRandomExitFromDirection(moveDirection.Value);
-            templateRequirements[currentRow, currentColumn].exits.Add(templateExit); // Add the move direction
+            levelRequirements[currentRow, currentColumn].exits.Add(templateExit); // Add the move direction
 
             switch (moveDirection.Value) // Move in the desired direction
             {
@@ -227,7 +228,7 @@ public class LevelGenerator : MonoBehaviour
                     throw new Exception("Selected move direction is invalid for the current state of the level generator.");
             }
 
-            templateRequirements[currentRow, currentColumn].exits.Add(Template.GetExitOpposite(templateExit)); // Add the move direction
+            levelRequirements[currentRow, currentColumn].exits.Add(Template.GetExitOpposite(templateExit)); // Add the move direction
             lastDirection = moveDirection;
 
         }
@@ -331,7 +332,40 @@ public class LevelGenerator : MonoBehaviour
                 {
                     continue;
                 }
-                //Template.Exit[] supportedExits = Template.GetExitsForTemplate(levelTemplates[i, j]);
+
+                HashSet<Template.Exit> possibleExits = GetTemplateNeighbourExits(j, i);
+                foreach (Template.Direction direction in Enum.GetValues(typeof(Template.Direction)))
+                {
+                    HashSet<Template.Exit> directionalExits = new HashSet<Template.Exit>(Template.GetExitsFromDirection(direction));
+                    directionalExits.IntersectWith(possibleExits);
+                    if (directionalExits.Count > 0)
+                    {
+                        Template.Exit currentExit = new List<Template.Exit>(directionalExits)[UnityEngine.Random.Range(0, directionalExits.Count)];
+                        int currentRow = i, currentColumn = j;
+
+                        levelRequirements[i, j].exits.Add(currentExit);
+
+                        switch (direction) // Move in the desired direction
+                        {
+                            case Template.Direction.Bottom:
+                                currentRow -= 1;
+                                break;
+                            case Template.Direction.Left:
+                                currentColumn -= 1;
+                                break;
+                            case Template.Direction.Right:
+                                currentColumn += 1;
+                                break;
+                            case Template.Direction.Top:
+                                currentRow += 1;
+                                break;
+                            default:
+                                throw new Exception("Selected move direction is invalid for the current state of the level generator.");
+                        }
+
+                        levelRequirements[currentRow, currentColumn].exits.Add(Template.GetExitOpposite(currentExit));
+                    }
+                }
             }
         }
         return;
@@ -493,7 +527,8 @@ public class LevelGenerator : MonoBehaviour
     /// <returns>A HashSet containing all the exits that could reach neighbouring templates if those neighbours also opened their exits.</returns>
     private HashSet<Template.Exit> GetTemplateNeighbourExits(int templateX, int templateY)
     {
-        HashSet<Template.Exit> neighbourExits, myExits = new HashSet<Template.Exit>();
+        HashSet<Template.Exit> neighbourExits, possibleExits = new HashSet<Template.Exit>(),
+            myExits = new HashSet<Template.Exit>(Template.GetExitsForTemplate(levelTemplates[templateY, templateX]));
 
         if (templateY > 0) 
         {
@@ -501,7 +536,7 @@ public class LevelGenerator : MonoBehaviour
             neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Top));
             foreach (Template.Exit exit in neighbourExits)
             {
-                myExits.Add(Template.GetExitOpposite(exit));
+                possibleExits.Add(Template.GetExitOpposite(exit));
             }
         }
         if (templateX > 0)
@@ -510,7 +545,7 @@ public class LevelGenerator : MonoBehaviour
             neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Right));
             foreach (Template.Exit exit in neighbourExits)
             {
-                myExits.Add(Template.GetExitOpposite(exit));
+                possibleExits.Add(Template.GetExitOpposite(exit));
             }
         }
         if (templateX < levelTemplateWidth - 1)
@@ -519,7 +554,7 @@ public class LevelGenerator : MonoBehaviour
             neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Left));
             foreach (Template.Exit exit in neighbourExits)
             {
-                myExits.Add(Template.GetExitOpposite(exit));
+                possibleExits.Add(Template.GetExitOpposite(exit));
             }
         }
         if (templateY < levelTemplateHeight - 1)
@@ -528,11 +563,11 @@ public class LevelGenerator : MonoBehaviour
             neighbourExits.IntersectWith(Template.GetExitsFromDirection(Template.Direction.Bottom));
             foreach (Template.Exit exit in neighbourExits)
             {
-                myExits.Add(Template.GetExitOpposite(exit));
+                possibleExits.Add(Template.GetExitOpposite(exit));
             }
         }
-
-        return null;
+        myExits.IntersectWith(possibleExits);
+        return myExits;
     }
 
     // Update is called once per frame
