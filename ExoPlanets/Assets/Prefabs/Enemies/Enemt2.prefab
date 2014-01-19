@@ -247,12 +247,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cec8b20866f2472582de18aa722a4e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounce_force: 12
+  bounce_force: 400
   walk_force: 6
   charge_target_zone: 1
-  max_preparing_frames: 10
-  max_recovery_frames: 10
-  charge_force: 12
+  max_preparing_frames: 150
+  max_recovery_frames: 150
+  charge_force: 25
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1
