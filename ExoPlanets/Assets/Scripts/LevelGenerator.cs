@@ -56,12 +56,13 @@ public class LevelGenerator : MonoBehaviour
         {
             Template.exitLookupSet.Add(exit, new HashSet<GameObject>());
         }
+
         for (int i = 0; i < levelTemplates.Length; i += 1)
         {
             TemplateAnnouncement templateAnnouncement = levelTemplates[i].GetComponent<TemplateAnnouncement>();
             for (int j = 0; j < templateAnnouncement.supportedExits.Length; j += 1)
             {
-                Template.exitLookupSet[templateAnnouncement.supportedExits[i]].Add(levelTemplates[i]);
+                Template.exitLookupSet[templateAnnouncement.supportedExits[j]].Add(levelTemplates[i]);
             }
         }
         
@@ -83,54 +84,32 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private void GenerateLevel()
     {
-        TemplateRequirementSet[,] templateRequirements = GenerateTemplateRequirements(LEVEL_TEMPLATE_WIDTH, LEVEL_TEMPLATE_HEIGHT); // Generate a required path through the level
+        
+        TemplateRequirementSet[,] templateRequirements = GenerateBaseRequirements(LEVEL_TEMPLATE_WIDTH, LEVEL_TEMPLATE_HEIGHT); // Generate a required path through the level
 
-        for (int i = 0; i < LEVEL_TEMPLATE_WIDTH; i += 1) // Loop over all the templates in the level
+        for (int templateY = 0; templateY < LEVEL_TEMPLATE_WIDTH; templateY += 1) // Loop over all the templates in the level...TODO: Turn this into it's own routine
         {
-            for (int j = 0; j < LEVEL_TEMPLATE_HEIGHT; j += 1)
+            for (int templateX = 0; templateX < LEVEL_TEMPLATE_HEIGHT; templateX += 1)
             {
-                int base_x = i * Template.TEMPLATE_TILE_WIDTH;
-                int base_y = j * Template.TEMPLATE_TILE_HEIGHT;
+                GameObject currentTemplate;
 
-                bool hasLeftRightExit = templateRequirements[i, j].exitDirections.Contains(Template.Direction.Left) || templateRequirements[i, j].exitDirections.Contains(Template.Direction.Right);
-                bool hasTopExit = templateRequirements[i, j].exitDirections.Contains(Template.Direction.Top);
-                bool hasBottomExit = templateRequirements[i, j].exitDirections.Contains(Template.Direction.Bottom);
-
-                for (int x = 0; x < Template.TEMPLATE_TILE_WIDTH; x += 1) // Loop over all the tiles in an individual template...TODO: Turn this into it's own routine
+                if (templateRequirements[templateY, templateX].exitDirections.Count == 0)
                 {
-                    for (int y = 0; y < Template.TEMPLATE_TILE_HEIGHT; y += 1)
+                    currentTemplate = levelTemplates[UnityEngine.Random.Range(0, levelTemplates.Length)];
+                }
+                else
+                {
+                    List<GameObject> allowableTemplates = Template.GetTemplatesForDirections(templateRequirements[templateY, templateX].exitDirections);
+                    if (allowableTemplates == null || allowableTemplates.Count == 0)
                     {
-                        int full_x = base_x + x;
-                        int full_y = base_y + y;
-                        
-                        /*
-                        if ((y == 7 || y == 8) && hasLeftRightExit)
-                        {
-                            tiles[full_x, full_y].type = Tile.TileOption.Floor;
-                        }
-                        else if ((x == 7 || x == 8) && y > 8 && has_top_exit)
-                        {
-                            tiles[full_x, full_y].type = Tile.TileOption.Floor;
-                        }
-                        else if ((x == 7 || x == 8) && y < 7 && has_bottom_exit)
-                        {
-                            tiles[full_x, full_y].type = Tile.TileOption.Floor;
-                        }
-
-                        GameObject prefab = tiles[full_x, full_y].type == Tile.TileOption.Floor ? tileFloor : tileEmpty;
-
-                        tileComponents[full_x, full_y] = Instantiate(prefab, new Vector3(full_x, full_y), Quaternion.identity) as GameObject;
-                        tileComponents[full_x, full_y].transform.parent = this.transform;
-                        */
-
+                        throw new Exception("Unable to retrieve a valid template for use in level generation.");
                     }
+                    currentTemplate = allowableTemplates[UnityEngine.Random.Range(0, allowableTemplates.Count)];
                 }
 
-                // Add a room label for debugging purposes (does not work)
-                /*GameObject label = Instantiate(levelTypeLabel, new Vector3(base_x, base_y), Quaternion.identity) as GameObject;
-                GUIText text = label.GetComponent<GUIText>();
-                text.text = roomTypes[i, j].ToString();
-                text.transform.parent = this.transform;*/
+                GameObject instance = Instantiate(currentTemplate, new Vector3(templateY * Template.TEMPLATE_TILE_HEIGHT, templateX * Template.TEMPLATE_TILE_WIDTH), Quaternion.identity) as GameObject;
+                instance.transform.parent = this.transform;
+
             }
         }
 
@@ -142,7 +121,7 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     /// <param name="levelTemplateHeight">The height of the level to generate in templates.</param>
     /// <param name="levelTemplateWidth">The width of the level to generate in templates.</param>
-    private TemplateRequirementSet[,] GenerateTemplateRequirements(int levelTemplateHeight, int levelTemplateWidth)
+    private TemplateRequirementSet[,] GenerateBaseRequirements(int levelTemplateHeight, int levelTemplateWidth)
     {
         TemplateRequirementSet[,] templateRequirements = new TemplateRequirementSet[levelTemplateHeight, levelTemplateWidth];
         Template.Direction? lastDirection = null;
@@ -182,7 +161,7 @@ public class LevelGenerator : MonoBehaviour
                     currentRow += 1;
                     break;
                 default:
-                    throw new InvalidOperationException("Selected move direction is invalid for the current state of the level generator.");
+                    throw new Exception("Selected move direction is invalid for the current state of the level generator.");
             }
             templateRequirements[currentRow, currentColumn].exitDirections.Add(Template.GetDirectionOpposite(moveDirection.Value)); // Add the move direction
             lastDirection = moveDirection;

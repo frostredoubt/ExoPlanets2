@@ -156,9 +156,73 @@ public static class Template
             case Direction.Top:
                 return Direction.Bottom;
             default:
-                throw new ArgumentException("Unable to provide opposite direction for invalid input.");
+                throw new Exception("Unable to provide opposite direction for invalid input.");
         }
     }
+
+    /// <summary>
+    /// Return all of the possible exits that are associated with a particular direction.
+    /// </summary>
+    /// <param name="direction">The direction to return exits for.</param>
+    /// <returns>A list of exits that occur on the provided direction.</returns>
+    public static List<Exit> GetExitsFromDirection(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.Bottom:
+                return new List<Exit>() { Exit.BottomLeft, Exit.BottomMiddle, Exit.BottomRight };
+            case Direction.Left:
+                return new List<Exit>() { Exit.LeftBottom, Exit.LeftMiddle, Exit.LeftTop };
+            case Direction.Right:
+                return new List<Exit>() { Exit.RightBottom, Exit.RightMiddle, Exit.RightTop };
+            case Direction.Top:
+                return new List<Exit>() { Exit.TopLeft, Exit.TopMiddle, Exit.TopRight };
+            default:
+                throw new Exception("Unable to provide opposite direction for invalid input.");
+        }
+    }
+
+    /// <summary>
+    /// Get a hash set of all of the valid possible templates associated with an exit type.
+    /// </summary>
+    /// <param name="exits">The list of exits to obtain a set of templates for.</param>
+    /// <returns>A hash set containing all valid templates for a list of exit types.</returns>
+    public static List<GameObject> GetTemplatesForExits(IEnumerable<Exit> exits)
+    {
+        IEnumerator<Exit> iterator = exits.GetEnumerator();
+        HashSet<GameObject> returnSet = new HashSet<GameObject>();
+
+        if (!iterator.MoveNext()) // If the provided collection is empty, return empty
+        {
+            return new List<GameObject>();
+        }
+        
+        returnSet.UnionWith(exitLookupSet[iterator.Current]); // Add all the elements of the first present set
+
+        while (iterator.MoveNext()) // Intersect with all the remaining sets
+        {
+            returnSet.IntersectWith(exitLookupSet[iterator.Current]);
+        }
+
+        return new List<GameObject>(returnSet);
+    }
+
+    /// <summary>
+    /// Get a hash set of all of the valid possible templates associated with an exit type.
+    /// </summary>
+    /// <param name="directions">The list of directions to obtain a set of templates for.</param>
+    /// <returns>A hash set containing all valid templates for a list of exit types.</returns>
+    public static List<GameObject> GetTemplatesForDirections(IEnumerable<Direction> directions)
+    {
+        List<Exit> exitList = new List<Exit>();
+        foreach (Direction direction in directions)
+        {
+            
+            exitList.AddRange(GetExitsFromDirection(direction));
+        }
+        return GetTemplatesForExits(exitList);
+    }
+
 }
 
 /// <summary>
