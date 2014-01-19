@@ -42,6 +42,11 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private GameObject[,] levelTemplates = null;
 
+    /// <summary>
+    /// An un-exciting list of solid walls which should never need to be referenced.
+    /// </summary>
+    private List<GameObject> levelSolidTemplates = null;
+
     #endregion
 
     #region Editor-Exposed Member Variables
@@ -51,17 +56,22 @@ public class LevelGenerator : MonoBehaviour
     /// <summary>
     /// Assign the empty tile.
     /// </summary>
-    public GameObject tileEmpty;
+    public GameObject tileEmpty = null;
 
     /// <summary>
     /// Assign the floor tile.
     /// </summary>
-    public GameObject tileFloor;
+    public GameObject tileFloor = null;
 
     /// <summary>
     /// The list of level templates that are usable by the generator.
     /// </summary>
-    public GameObject[] usableTemplates;
+    public GameObject[] usableTemplates = null;
+
+    /// <summary>
+    /// The solid template with no open spaces.
+    /// </summary>
+    public GameObject solidTemplate = null;
 
     #endregion
 
@@ -106,6 +116,7 @@ public class LevelGenerator : MonoBehaviour
     {
         SetLevelSize();
         CleanUpLevel();
+        GenerateLevelWalls(); // Create the walls around the level
         levelRequirements = GenerateBaseRequirements(); // Generate a required path through the level
         GenerateTemplatesFirstPass(Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH); // Create the required tile templates
         return;
@@ -126,7 +137,7 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private void CleanUpLevel()
     {
-        if (levelTemplates == null) // Delete all the templates that exist in the level
+        if (levelTemplates == null) // Create and cleanup all the real templates
         {
             levelTemplates = new GameObject[levelTemplateHeight, levelTemplateWidth];
         }
@@ -140,7 +151,37 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
+
+        if (levelSolidTemplates == null) // Create and cleanup all the additional solid templates that surround the map
+        {
+            levelSolidTemplates = new List<GameObject>();
+        }
+        else
+        {
+            for (int i = 0; i < levelSolidTemplates.Count; i += 1)
+            {
+                Destroy(levelSolidTemplates[i]);
+            }
+        }
+
         return;
+    }
+
+    /// <summary>
+    /// Create a border of solid walls around the level.
+    /// </summary>
+    private void GenerateLevelWalls()
+    {
+        for (int i = 0; i < levelTemplateWidth; i += 1) // Instantiate solid walls above and below the level
+        {
+            levelSolidTemplates.Add(InstantiateTemplate(solidTemplate, i, -1, Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH));
+            levelSolidTemplates.Add(InstantiateTemplate(solidTemplate, i, levelTemplateHeight, Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH));
+        }
+        for (int i = -1; i <= levelTemplateHeight; i += 1)
+        {
+            levelSolidTemplates.Add(InstantiateTemplate(solidTemplate, -1, i, Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH));
+            levelSolidTemplates.Add(InstantiateTemplate(solidTemplate, levelTemplateWidth, i, Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH));
+        }
     }
 
     /// <summary>
@@ -259,7 +300,7 @@ public class LevelGenerator : MonoBehaviour
                     throw new Exception("Unable to retrieve a valid template for use in level generation.");
                 }
                 currentTemplate = allowableTemplates[UnityEngine.Random.Range(0, allowableTemplates.Count)];
-                InstantiateTemplate(currentTemplate, levelRequirements, i, j, templateTileHeight, templateTileWidth);
+                levelTemplates[i, j] = InstantiateTemplate(currentTemplate, j, i, templateTileHeight, templateTileWidth);
             }
         }
         return;
@@ -269,16 +310,16 @@ public class LevelGenerator : MonoBehaviour
     /// Instantiate a template within the game world.
     /// </summary>
     /// <param name="template">The template to instantiate.</param>
-    /// <param name="templateRequirements">The requirements for templates in the level.</param>
-    /// <param name="column">The column the template sits at in the level matrix.</param>
-    /// <param name="row">The row the template sits at in the level matrix.</param>
+    /// <param name="templateX">The x value the template sits at in the level grid.</param>
+    /// <param name="templateY">The y value the template sits at in the level grid.</param>
     /// <param name="templateTileHeight">The height of a template in tiles.</param>
     /// <param name="templateTileWidth">The width of a template in tiles.</param>
-    private void InstantiateTemplate(GameObject template, TemplateRequirementSet[,] templateRequirements, int column, int row, int templateTileHeight, int templateTileWidth)
+    /// <returns>Returns a reference to the instantiated template intsance.</returns>
+    private GameObject InstantiateTemplate(GameObject template, int templateX, int templateY, int templateTileHeight, int templateTileWidth)
     {
-        levelTemplates[column, row] = Instantiate(template, new Vector3(row * templateTileWidth, column * templateTileHeight), Quaternion.identity) as GameObject;
-        levelTemplates[column, row].transform.parent = this.transform;
-        return;
+        GameObject instance = Instantiate(template, new Vector3(templateX * templateTileWidth, templateY * templateTileHeight), Quaternion.identity) as GameObject;
+        instance.transform.parent = this.transform;
+        return instance;
     }
 
     /// <summary>
@@ -303,7 +344,8 @@ public class LevelGenerator : MonoBehaviour
                             GenerateLevelEntrance(levelTemplates[i, j]);
                             break;
                         case Template.Feature.Exit: // Spawn the exit to the level
-                            throw new Exception("Nobody has implemented inserting the level exit yet. Time to yell at Ben until he does!");
+                            //throw new Exception("Nobody has implemented inserting the level exit yet. Time to yell at Ben until he does!");
+                            break;
                         default:
                             throw new Exception("Unable to add invalid feature to template.");
                     }
