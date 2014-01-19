@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21200000}
   - 114: {fileID: 11400000}
   m_Layer: 8
-  m_Name: PLACEwallRight
+  m_Name: PLACEwallRightMaybe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18e960c036c444083b1cadd8aba98c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 100000, guid: 3dc758896938242e79b2c7a8e301691e, type: 2}
+  prefab: {fileID: 100000, guid: 825df8de95f294a97aea380e4634244f, type: 2}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

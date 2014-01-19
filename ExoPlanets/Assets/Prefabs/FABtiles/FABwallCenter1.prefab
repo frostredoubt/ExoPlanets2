@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibilities:
-  - {fileID: 21300000, guid: 093af2a6390304480aab646cf87e7dcc, type: 3}
+  - {fileID: 21300000, guid: b8b7c3907d7bc458f9a0817b53779018, type: 3}
   - {fileID: 21300000, guid: eab84627426474c8a9595033d7e30ce5, type: 3}
   - {fileID: 21300000, guid: 2ddcf14d1e872484f9b9454b6908512e, type: 3}
 --- !u!212 &21200000
