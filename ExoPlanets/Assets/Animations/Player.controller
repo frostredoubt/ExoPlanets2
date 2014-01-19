@@ -189,6 +189,21 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110255436
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Swing_down
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: f9adaa9bfefa4854885c4c927343a7fb, type: 2}
+  m_ParentStateMachine: {fileID: 110700000}
+  m_Position: {x: 94, y: 298, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110286258
 State:
   m_ObjectHideFlags: 3
@@ -232,6 +247,7 @@ StateMachine:
   - {fileID: 110203022}
   - {fileID: 110202998}
   - {fileID: 110296075}
+  - {fileID: 110255436}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
