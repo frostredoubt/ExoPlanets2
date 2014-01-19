@@ -44,10 +44,19 @@ public class Move : MonoBehaviour {
     void Change_character_direction()
     {
         Vector3 old = transform.localScale;
-        Vector2 old_v = Forces;
-        old_v.y = 0;
-        old.x = old_v.normalized.x;
+        Vector2 force_vector = Forces;
+        float backup_y = old.y;
+        float backup_z = old.z;
+
+        force_vector.y = 0;
+        old.y = 0;
+        old.z = 0;
+
+        old.x = old.magnitude * force_vector.normalized.x;
+        old.y = backup_y;
+        old.z = backup_z;
         transform.localScale = old;
+        Debug.Log(old);
     }
 
     void Gather_inputs()
