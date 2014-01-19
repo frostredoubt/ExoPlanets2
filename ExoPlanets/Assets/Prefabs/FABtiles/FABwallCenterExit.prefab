@@ -52,9 +52,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibilities:
-  - {fileID: 21300000, guid: 093af2a6390304480aab646cf87e7dcc, type: 3}
-  - {fileID: 21300000, guid: eab84627426474c8a9595033d7e30ce5, type: 3}
-  - {fileID: 21300000, guid: 2ddcf14d1e872484f9b9454b6908512e, type: 3}
+  - {fileID: 21300000, guid: 0c247e190fe614453835d46b35b43ecb, type: 3}
+  - {fileID: 21300000, guid: 53a558d112b324ee7ae1f8c52168688b, type: 3}
+  - {fileID: 21300000, guid: 74512cfc0145a484c819da266d917d89, type: 3}
+  - {fileID: 21300000, guid: 94cfad499cbdd460a9b23535d12d965a, type: 3}
+  - {fileID: 21300000, guid: b6d77942fbb0942309f73f5a318da22b, type: 3}
+  - {fileID: 21300000, guid: ed37b5aea8e384c74bcce29c74a00a26, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

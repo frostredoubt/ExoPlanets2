@@ -65,8 +65,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   possibilities:
-  - {fileID: 21300000, guid: d7a0fb2f902f74f20b3b758ec6882a4c, type: 3}
-  - {fileID: 21300000, guid: fbddc6787a1d94b9f81c075daa5d9c81, type: 3}
+  - {fileID: 21300000, guid: 2dd52cb2db9594d708a40b84db65ec2b, type: 3}
+  - {fileID: 21300000, guid: 3672ce28042de4740a14c679f4e58d49, type: 3}
+  - {fileID: 21300000, guid: 4f130ae4258f14d248cbfca226f1270c, type: 3}
+  - {fileID: 21300000, guid: 823e1abf2eafa4e3abec20de4642de54, type: 3}
+  - {fileID: 21300000, guid: ba209bfd249904a8f85d4d59a1e46503, type: 3}
+  - {fileID: 21300000, guid: dbfa118f516f34dfc80f049563d02771, type: 3}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

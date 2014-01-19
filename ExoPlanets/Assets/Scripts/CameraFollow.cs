@@ -26,7 +26,7 @@ public class CameraFollow : MonoBehaviour
 	{
 		// By default the target x and y coordinates of the camera are it's current x and y coordinates.
 		float targetX = player.position.x;
-		float targetY = player.position.y;
+		float targetY = player.position.y + 0.5f;
 		
 		// The target x and y coordinates should not be larger than the maximum or smaller than the minimum.
 		//targetX = Mathf.Clamp(targetX, minXAndY.x, maxXAndY.x);
