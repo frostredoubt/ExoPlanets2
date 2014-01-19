@@ -22,8 +22,6 @@ public class Move : MonoBehaviour {
         Gather_inputs();
         Change_displayed_components();
         Apply_forces();
-
-        Debug_output();
 	}
 
     private void Change_displayed_components()
@@ -90,20 +88,5 @@ public class Move : MonoBehaviour {
         {
             gameObject.rigidbody2D.AddForce(new Vector2(0, Jump_Force));
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        Debug.Log("Trigger");
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision"); 
-    }
-
-    void Debug_output()
-    {
-       
     }
 }
