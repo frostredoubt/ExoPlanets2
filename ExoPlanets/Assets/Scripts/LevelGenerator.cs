@@ -295,24 +295,35 @@ public class LevelGenerator : MonoBehaviour
                     RemoveExitWalls(levelTemplates[i, j], exit);
                 }
 
-				if(levelRequirements[i, j].features.Contains(Template.Feature.Entrance)) {
-					SpawnPlayerAndDoor(levelTemplates[i, j]);
-				}
+                foreach (Template.Feature feature in levelRequirements[i, j].features) // Spawn any necessary features in the room
+                {
+                    switch (feature)
+                    {
+                        case Template.Feature.Entrance: // Spawn the entrance to the level
+                            GenerateLevelEntrance(levelTemplates[i, j]);
+                            break;
+                        case Template.Feature.Exit: // Spawn the exit to the level
+                            throw new Exception("Nobody has implemented inserting the level exit yet. Time to yell at Ben until he does!");
+                        default:
+                            throw new Exception("Unable to add invalid feature to template.");
+                    }
+                }
             }
         }
         return;
     }
 
 	/// <summary>
-	/// Spawns the player and door.
-	/// </summary>
-	private void SpawnPlayerAndDoor(GameObject template)
+	/// Generate the entrance to the level during the level generation cleanup phase.
+	/// </summary>4
+    /// <param name="template">The template to spawn the level entrance in.</param>
+	private void GenerateLevelEntrance(GameObject template)
 	{
-		GameObject door = Template.GetDoor (template);
-		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-
+		GameObject door = Template.GetLevelEntranceTile(template);
+		GameObject player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = door.transform.position;
-		door.SetActive (true);
+		door.SetActive(true);
+        return;
 	}
 
     /// <summary>
