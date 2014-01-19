@@ -161,6 +161,44 @@ public static class Template
     }
 
     /// <summary>
+    /// Get the attached opposite exit of a provided exit.
+    /// </summary>
+    /// <param name="direction">The exit to get the attached opposite of.</param>
+    /// <returns>The attached opposite exit of the current exit.</returns>
+    public static Exit GetExitOpposite(Exit exit)
+    {
+        switch (exit) // Hopefully this gets compiler-optimized into a lookup table (it almost certainly will lol)
+        {
+            case Exit.BottomLeft:
+                return Exit.TopLeft;
+            case Exit.BottomMiddle:
+                return Exit.TopMiddle;
+            case Exit.BottomRight:
+                return Exit.TopRight;
+            case Exit.LeftBottom:
+                return Exit.RightBottom;
+            case Exit.LeftMiddle:
+                return Exit.RightMiddle;
+            case Exit.LeftTop:
+                return Exit.RightTop;
+            case Exit.RightBottom:
+                return Exit.LeftBottom;
+            case Exit.RightMiddle:
+                return Exit.LeftMiddle;
+            case Exit.RightTop:
+                return Exit.LeftTop;
+            case Exit.TopLeft:
+                return Exit.BottomLeft;
+            case Exit.TopMiddle:
+                return Exit.BottomMiddle;
+            case Exit.TopRight:
+                return Exit.BottomRight;
+            default:
+                throw new Exception("Unable to provide attached opposite exit for invalid input.");
+        }
+    }
+
+    /// <summary>
     /// Return all of the possible exits that are associated with a particular direction.
     /// </summary>
     /// <param name="direction">The direction to return exits for.</param>
@@ -180,6 +218,17 @@ public static class Template
             default:
                 throw new Exception("Unable to provide opposite direction for invalid input.");
         }
+    }
+
+    /// <summary>
+    /// Get a random exit on the side of a direction.
+    /// </summary>
+    /// <param name="direction">The direction to get a random exit for.</param>
+    /// <returns>A random exit on the side of the direction.</returns>
+    public static Exit GetRandomExitFromDirection(Direction direction)
+    {
+        List<Exit> exits = GetExitsFromDirection(direction);
+        return exits[UnityEngine.Random.Range(0, exits.Count)];
     }
 
     /// <summary>
@@ -232,9 +281,9 @@ public class TemplateRequirementSet
 {
 
     /// <summary>
-    /// The required directions where exits must exist for a particular template during level generation.
+    /// The required exits that must exist for a particular template during level generation.
     /// </summary>
-    public HashSet<Template.Direction> exitDirections;
+    public HashSet<Template.Exit> exits;
 
     /// <summary>
     /// The required features for a particular template during level generation.
@@ -245,7 +294,7 @@ public class TemplateRequirementSet
     /// Create a template that has no exit direction or feature requirements.
     /// </summary>
     public TemplateRequirementSet()
-        : this(new HashSet<Template.Direction>(), new HashSet<Template.Feature>())
+        : this(new HashSet<Template.Exit>(), new HashSet<Template.Feature>())
     {
         return;
     }
@@ -253,9 +302,9 @@ public class TemplateRequirementSet
     /// <summary>
     /// Create a template that has a set of known exit direction requirements.
     /// </summary>
-    /// <param name="exitDirections">The list of directions that require an exit for the template.</param>
-    public TemplateRequirementSet(IEnumerable<Template.Direction> exitDirections)
-        : this(exitDirections, new HashSet<Template.Feature>())
+    /// <param name="exits">The list of directions that require an exit for the template.</param>
+    public TemplateRequirementSet(IEnumerable<Template.Exit> exits)
+        : this(exits, new HashSet<Template.Feature>())
     {
         return;
     }
@@ -263,11 +312,11 @@ public class TemplateRequirementSet
     /// <summary>
     /// Create a template that has a set of known exit direction and feature requirements.
     /// </summary>
-    /// <param name="exitDirections">The list of directions that require an exit for the template.</param>
+    /// <param name="exits">The list of directions that require an exit for the template.</param>
     /// <param name="features">The list of required features for a template.</param>
-    public TemplateRequirementSet(IEnumerable<Template.Direction> exitDirections, IEnumerable<Template.Feature> features)
+    public TemplateRequirementSet(IEnumerable<Template.Exit> exits, IEnumerable<Template.Feature> features)
     {
-        this.exitDirections = new HashSet<Template.Direction>(exitDirections);
+        this.exits = new HashSet<Template.Exit>(exits);
         this.features = new HashSet<Template.Feature>(features);
         return;
     }

@@ -84,35 +84,8 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private void GenerateLevel()
     {
-        
-        TemplateRequirementSet[,] templateRequirements = GenerateBaseRequirements(LEVEL_TEMPLATE_WIDTH, LEVEL_TEMPLATE_HEIGHT); // Generate a required path through the level
-
-        for (int templateY = 0; templateY < LEVEL_TEMPLATE_WIDTH; templateY += 1) // Loop over all the templates in the level...TODO: Turn this into it's own routine
-        {
-            for (int templateX = 0; templateX < LEVEL_TEMPLATE_HEIGHT; templateX += 1)
-            {
-                GameObject currentTemplate;
-
-                if (templateRequirements[templateY, templateX].exitDirections.Count == 0)
-                {
-                    currentTemplate = levelTemplates[UnityEngine.Random.Range(0, levelTemplates.Length)];
-                }
-                else
-                {
-                    List<GameObject> allowableTemplates = Template.GetTemplatesForDirections(templateRequirements[templateY, templateX].exitDirections);
-                    if (allowableTemplates == null || allowableTemplates.Count == 0)
-                    {
-                        throw new Exception("Unable to retrieve a valid template for use in level generation.");
-                    }
-                    currentTemplate = allowableTemplates[UnityEngine.Random.Range(0, allowableTemplates.Count)];
-                }
-
-                GameObject instance = Instantiate(currentTemplate, new Vector3(templateY * Template.TEMPLATE_TILE_HEIGHT, templateX * Template.TEMPLATE_TILE_WIDTH), Quaternion.identity) as GameObject;
-                instance.transform.parent = this.transform;
-
-            }
-        }
-
+        TemplateRequirementSet[,] templateRequirements = GenerateBaseRequirements(LEVEL_TEMPLATE_HEIGHT, LEVEL_TEMPLATE_WIDTH); // Generate a required path through the level
+        GenerateTemplatesFirstPass(templateRequirements, Template.TEMPLATE_TILE_HEIGHT, Template.TEMPLATE_TILE_WIDTH);
         return;
     }
 
@@ -141,13 +114,16 @@ public class LevelGenerator : MonoBehaviour
         while (true)
         {
             Template.Direction? moveDirection = GetMoveDirection(currentRow, currentColumn, levelTemplateHeight, levelTemplateWidth, lastDirection); // Get the direction to move in
+            Template.Exit templateExit;
 
             if (moveDirection == null) // If the direction is null, then we should be placing an exit and ending
             {
                 templateRequirements[currentRow, currentColumn].features.Add(Template.Feature.Exit);
                 return templateRequirements;
             }
-            templateRequirements[currentRow, currentColumn].exitDirections.Add(moveDirection.Value); // Add the move direction
+
+            templateExit = Template.GetRandomExitFromDirection(moveDirection.Value);
+            templateRequirements[currentRow, currentColumn].exits.Add(templateExit); // Add the move direction
 
             switch (moveDirection.Value) // Move in the desired direction
             {
@@ -163,8 +139,10 @@ public class LevelGenerator : MonoBehaviour
                 default:
                     throw new Exception("Selected move direction is invalid for the current state of the level generator.");
             }
-            templateRequirements[currentRow, currentColumn].exitDirections.Add(Template.GetDirectionOpposite(moveDirection.Value)); // Add the move direction
+
+            templateRequirements[currentRow, currentColumn].exits.Add(Template.GetExitOpposite(templateExit)); // Add the move direction
             lastDirection = moveDirection;
+
         }
     }
 
@@ -182,12 +160,15 @@ public class LevelGenerator : MonoBehaviour
         Template.Direction chosenDirection;
         int randomUpper = 1;
 
+        validDirections.Add(Template.Direction.Top); // Moving upwards is always a valid "choice", but if chosen on the top row, we return null (which tells the map to place an exit)
+
         if ((lastDirection == null || lastDirection != Template.Direction.Right) && (currentColumn > 0)) // Add moving left as a valid direction
         {
             validDirections.Add(Template.Direction.Left); // Cheat to allow a random distribution
             validDirections.Add(Template.Direction.Left);
             randomUpper += 2;
         }
+
         if ((lastDirection == null || lastDirection != Template.Direction.Left) && (currentColumn < levelTemplateWidth - 1)) // Add moving left as a valid direction
         {
             validDirections.Add(Template.Direction.Right); // Cheat to allow a random distribution
@@ -195,14 +176,49 @@ public class LevelGenerator : MonoBehaviour
             randomUpper += 2;
         }
 
-        validDirections.Add(Template.Direction.Top); // Moving upwards is always a valid "choice", but if chosen on the top row, we return null (which tells the map to place an exit)
-        
         chosenDirection = validDirections[UnityEngine.Random.Range(0, randomUpper)];
         if (chosenDirection == Template.Direction.Top && currentRow == levelTemplateHeight - 1) // If we're moving up on the final row, simply terminate
         {
             return null;
         }
         return chosenDirection;
+    }
+
+    /// <summary>
+    /// Generate the templates for the required path through the level.
+    /// </summary>
+    /// <param name="templateRequirements">The requirements for a base path through the level.</param>
+    /// <param name="templateTileHeight">The height of a template in tiles.</param>
+    /// <param name="templateTileWidth">The width of a template in tiles.</param>
+    private void GenerateTemplatesFirstPass(TemplateRequirementSet[,] templateRequirements, int templateTileHeight, int templateTileWidth)
+    {
+        String debug;
+
+        for (int i = 0; i < templateRequirements.GetLength(0); i += 1)
+        {
+            debug = "";
+
+            for (int j = 0; j < templateRequirements.GetLength(1); j += 1)
+            {
+                GameObject currentTemplate;
+                if (templateRequirements[i, j].exits.Count == 0) //&& templateRequirements[i, j].features.Count == 0)
+                {
+                    continue;
+                }
+
+                List<GameObject> allowableTemplates = Template.GetTemplatesForExits(templateRequirements[i, j].exits);
+                if (allowableTemplates == null || allowableTemplates.Count == 0)
+                {
+                    throw new Exception("Unable to retrieve a valid template for use in level generation.");
+                }
+                currentTemplate = allowableTemplates[UnityEngine.Random.Range(0, allowableTemplates.Count)];
+
+                GameObject instance = Instantiate(currentTemplate, new Vector3(i * templateTileHeight, j * templateTileWidth), Quaternion.identity) as GameObject;
+                instance.transform.parent = this.transform;
+
+            }
+        }
+        return;
     }
 
     // Update is called once per frame
