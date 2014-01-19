@@ -103,10 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileEmpty: {fileID: 100000, guid: d320a26f1978c934cb9e3e93d945dd60, type: 2}
   tileFloor: {fileID: 100000, guid: ceb0f874b6e6f624b9a5c0a1ba22486f, type: 2}
-  levelTemplates:
-  - {fileID: 100052, guid: 6a2b0f8f670a642b1a62e147309ff193, type: 2}
-  - {fileID: 100760, guid: 09ae2d3f90bfc4b608a10204fc7cb741, type: 2}
-  - {fileID: 100000, guid: 352c45e79a6f34d7286fea40ab48e143, type: 2}
+  usableTemplates:
+  - {fileID: 100044, guid: fc4967337131547bab5328f3393f8e9d, type: 2}
+  - {fileID: 100164, guid: 18e879cb4398c4e728704afb84f80b2e, type: 2}
 --- !u!4 &199164094
 Transform:
   m_ObjectHideFlags: 0

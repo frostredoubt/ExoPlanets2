@@ -199,6 +199,74 @@ public static class Template
     }
 
     /// <summary>
+    /// Get the base X component location for exits in a template.
+    /// </summary>
+    /// <param name="exit">The exit to get the X component location for.</param>
+    /// <returns>An integer representing the X component of an exit location.</returns>
+    public static int GetExitXComponent(Exit exit)
+    {
+        switch (exit) // Hopefully this gets compiler-optimized into a lookup table (it almost certainly will lol)
+        {
+            case Exit.BottomLeft:
+                return 1;
+            case Exit.BottomMiddle:
+                return (TEMPLATE_TILE_WIDTH - 1) / 2;
+            case Exit.BottomRight:
+                return TEMPLATE_TILE_WIDTH - 2;
+            case Exit.LeftBottom:  
+            case Exit.LeftMiddle:
+            case Exit.LeftTop:
+                return 0;
+            case Exit.RightBottom:
+            case Exit.RightMiddle:
+            case Exit.RightTop:
+                return TEMPLATE_TILE_WIDTH - 1;
+            case Exit.TopLeft:
+                return 1;
+            case Exit.TopMiddle:
+                return (TEMPLATE_TILE_WIDTH - 1) / 2;
+            case Exit.TopRight:
+                return TEMPLATE_TILE_WIDTH - 2;
+            default:
+                throw new Exception("Unable to provide X component exit for invalid input.");
+        }
+    }
+
+    /// <summary>
+    /// Get the base Y component location for exits in a template.
+    /// </summary>
+    /// <param name="exit">The exit to get the Y component location for.</param>
+    /// <returns>An integer representing the Y component of an exit location.</returns>
+    public static int GetExitYComponent(Exit exit)
+    {
+        switch (exit) // Hopefully this gets compiler-optimized into a lookup table (it almost certainly will lol)
+        {
+            case Exit.BottomLeft:
+            case Exit.BottomMiddle:
+            case Exit.BottomRight:
+                return 0;
+            case Exit.LeftBottom:
+                return 1;
+            case Exit.LeftMiddle:
+                return (TEMPLATE_TILE_HEIGHT - 1) / 2;
+            case Exit.LeftTop:
+                return TEMPLATE_TILE_HEIGHT - 2;
+            case Exit.RightBottom:
+                return 1;
+            case Exit.RightMiddle:
+                return (TEMPLATE_TILE_HEIGHT - 1) / 2;
+            case Exit.RightTop:
+                return TEMPLATE_TILE_HEIGHT - 2;
+            case Exit.TopLeft:
+            case Exit.TopMiddle:
+            case Exit.TopRight:
+                return TEMPLATE_TILE_HEIGHT - 1;
+            default:
+                throw new Exception("Unable to provide Y component exit for invalid input.");
+        }
+    }
+
+    /// <summary>
     /// Return all of the possible exits that are associated with a particular direction.
     /// </summary>
     /// <param name="direction">The direction to return exits for.</param>
@@ -216,7 +284,7 @@ public static class Template
             case Direction.Top:
                 return new List<Exit>() { Exit.TopLeft, Exit.TopMiddle, Exit.TopRight };
             default:
-                throw new Exception("Unable to provide opposite direction for invalid input.");
+                throw new Exception("Unable to provide exits for invalid input.");
         }
     }
 
@@ -272,53 +340,22 @@ public static class Template
         return GetTemplatesForExits(exitList);
     }
 
-}
-
-/// <summary>
-/// A class that represents the requirements for a template during level generation.
-/// </summary>
-public class TemplateRequirementSet
-{
-
     /// <summary>
-    /// The required exits that must exist for a particular template during level generation.
+    /// Return a list of all of the exit tiles of a template.
     /// </summary>
-    public HashSet<Template.Exit> exits;
-
-    /// <summary>
-    /// The required features for a particular template during level generation.
-    /// </summary>
-    public HashSet<Template.Feature> features;
-
-    /// <summary>
-    /// Create a template that has no exit direction or feature requirements.
-    /// </summary>
-    public TemplateRequirementSet()
-        : this(new HashSet<Template.Exit>(), new HashSet<Template.Feature>())
+    /// <param name="template">The template to list exit tiles from.</param>
+    /// <returns>A list of all the exit tiles contained in a template.</returns>
+    public static List<GameObject> GetExitTiles(GameObject template)
     {
-        return;
-    }
-
-    /// <summary>
-    /// Create a template that has a set of known exit direction requirements.
-    /// </summary>
-    /// <param name="exits">The list of directions that require an exit for the template.</param>
-    public TemplateRequirementSet(IEnumerable<Template.Exit> exits)
-        : this(exits, new HashSet<Template.Feature>())
-    {
-        return;
-    }
-
-    /// <summary>
-    /// Create a template that has a set of known exit direction and feature requirements.
-    /// </summary>
-    /// <param name="exits">The list of directions that require an exit for the template.</param>
-    /// <param name="features">The list of required features for a template.</param>
-    public TemplateRequirementSet(IEnumerable<Template.Exit> exits, IEnumerable<Template.Feature> features)
-    {
-        this.exits = new HashSet<Template.Exit>(exits);
-        this.features = new HashSet<Template.Feature>(features);
-        return;
+        List<GameObject> walls = new List<GameObject>();
+        foreach (Transform child in template.transform)
+        {
+            if (child.gameObject.tag == "roomExit")
+            {
+                walls.Add(child.gameObject);
+            }
+        }
+        return walls;
     }
 
 }

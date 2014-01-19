@@ -1,20 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TileReplaceSelf : MonoBehaviour {
+public class TileReplaceSelf : MonoBehaviour
+{
 
 	public GameObject prefab;
 
 	// Use this for initialization
-	void Start () {
+	void Awake()
+    {
 		GameObject parent = this.transform.parent.gameObject;
-		GameObject replacement = Instantiate (prefab, transform.position, transform.rotation) as GameObject;
+		GameObject replacement = Instantiate(prefab, transform.position, transform.rotation) as GameObject;        
 		replacement.transform.parent = parent.transform;
-		Destroy (this.gameObject);
+		Destroy(this.gameObject);
+        return;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }
