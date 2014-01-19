@@ -64,3 +64,7 @@ TagManager:
     userID: 0
     uniqueID: 0
     locked: 0
+  - name: Overlays
+    userID: 1
+    uniqueID: 40378131
+    locked: 0
