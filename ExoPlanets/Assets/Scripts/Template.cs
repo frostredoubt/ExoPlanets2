@@ -341,36 +341,62 @@ public static class Template
     }
 
     /// <summary>
+    /// Get a child of an object with a specific tag.
+    /// </summary>
+    /// <param name="gameObject">The game object to extract the child from.</param>
+    /// <param name="tag">The tag to search among the children for.</param>
+    /// <returns></returns>
+    public static GameObject GetTaggedChild(GameObject gameObject, String tag)
+    {
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.gameObject.tag == tag)
+            {
+                return child.gameObject;
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// Get all the children of an object with a specific tag.
+    /// </summary>
+    /// <param name="gameObject">The game object to extract the children from.</param>
+    /// <param name="tag">The tag to search among the children for.</param>
+    /// <returns></returns>
+    public static List<GameObject> GetTaggedChildren(GameObject gameObject, String tag)
+    {
+        List<GameObject> taggedChildren = new List<GameObject>();
+        foreach (Transform child in gameObject.transform)
+        {
+            if (child.gameObject.tag == tag)
+            {
+                taggedChildren.Add(child.gameObject);
+            }
+        }
+        return taggedChildren;
+    }
+
+
+    /// <summary>
     /// Return a list of all of the exit tiles of a template.
     /// </summary>
     /// <param name="template">The template to list exit tiles from.</param>
-    /// <returns>A list of all the exit tiles contained in a template.</returns>
+    /// <returns>A list of all the exit tiles contained in a template (which may be empty if none are found).</returns>
     public static List<GameObject> GetExitTiles(GameObject template)
     {
-        List<GameObject> walls = new List<GameObject>();
-        foreach (Transform child in template.transform)
-        {
-            if (child.gameObject.tag == "roomExit")
-            {
-                walls.Add(child.gameObject);
-            }
-        }
-        return walls;
+        return GetTaggedChildren(template, "roomExit");
     }
 
+
 	/// <summary>
-	/// Gets the door. Assumes a door exists in each template
+	/// Return the tile containing a door element inside a template.
 	/// </summary>
-	public static GameObject GetDoor(GameObject template)
+    /// <param name="template">The template to get the door from.</param>
+    /// <returns>The tile containing the door for a template, or alternatively null if none is found.</returns>
+	public static GameObject GetLevelEntranceTile(GameObject template)
 	{
-		foreach (Transform child in template.transform)
-		{
-			if (child.gameObject.tag == "door")
-			{
-				return child.gameObject;
-			}
-		}
-		return null; // Should never get here
+        return GetTaggedChild(template, "door");
 	}
 
 }
