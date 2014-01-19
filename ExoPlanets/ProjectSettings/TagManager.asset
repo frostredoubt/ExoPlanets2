@@ -6,7 +6,7 @@ TagManager:
   - 
   - roomExit
   - door
-  - 
+  - Weapon
   - 
   - 
   - 
@@ -26,6 +26,11 @@ TagManager:
   - TLexit
   - LTexit
   - RBexit
+  - 
+  - LMexit
+  - TMexit
+  - RMexit
+  - BMexit
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -63,6 +68,14 @@ TagManager:
   - name: Default
     userID: 0
     uniqueID: 0
+    locked: 0
+  - name: Background
+    userID: 3
+    uniqueID: 1016606585
+    locked: 0
+  - name: Foreground
+    userID: 2
+    uniqueID: 1201400717
     locked: 0
   - name: Overlays
     userID: 1

@@ -7,6 +7,8 @@ public class Enemy1AI : MonoBehaviour {
 	private Transform groundCheck;
 	private float last_jump_time;
 	private bool move_away_from_character = false;
+	private Animator animation;
+	private GameObject beetle;
 
 
 	public float seconds_between_jumps;
@@ -17,6 +19,8 @@ public class Enemy1AI : MonoBehaviour {
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("Player");
 		groundCheck = transform.Find("groundCheck");
+		beetle = transform.Find ("Beetle").gameObject;
+		animation = beetle.GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -24,15 +28,24 @@ public class Enemy1AI : MonoBehaviour {
 
 		bool onGround = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
+		animation.SetBool ("walk", true);
+		animation.SetBool("jump", !onGround);
+
 		if (onGround && (Time.time - last_jump_time) > seconds_between_jumps) {
 			Vector3 playerDirection = player.transform.position - this.gameObject.transform.position;
 			Vector3 jump = new Vector2(playerDirection.x, Mathf.Abs (playerDirection.x));
+
+			beetle.transform.localScale = new Vector3(Mathf.Abs(beetle.transform.localScale.x) * (jump.x > 0 ? -1 : 1), beetle.transform.localScale.y, beetle.transform.localScale.z);
+
 			gameObject.rigidbody2D.AddForce(jump.normalized * jump_speed);
 			last_jump_time = Time.time;
 			move_away_from_character = false;
 		} else {
 			Vector3 playerDirection = player.transform.position - this.gameObject.transform.position;
 			Vector3 horizontal = new Vector2(move_away_from_character ? -playerDirection.x : playerDirection.x, 0);
+
+			beetle.transform.localScale = new Vector3(Mathf.Abs(beetle.transform.localScale.x) * (horizontal.x > 0 ? -1 : 1), beetle.transform.localScale.y, beetle.transform.localScale.z);
+
 			gameObject.rigidbody2D.AddForce(horizontal.normalized * walk_speed);
 		}
 	}
