@@ -15,10 +15,8 @@ public class Enemy : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("Trigger");
         if (collider.tag == "Weapon")
         {
-            Debug.Log("Hit!");
             Destroy(gameObject);
         }
     }

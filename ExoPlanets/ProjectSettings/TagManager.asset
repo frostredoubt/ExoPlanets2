@@ -6,7 +6,7 @@ TagManager:
   - 
   - roomExit
   - door
-  - 
+  - Weapon
   - 
   - 
   - 
@@ -26,6 +26,11 @@ TagManager:
   - TLexit
   - LTexit
   - RBexit
+  - 
+  - LMexit
+  - TMexit
+  - RMexit
+  - BMexit
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
