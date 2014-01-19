@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using UnityEngine;
-using System.Collections;
-
 public class CameraFollow : MonoBehaviour 
 {
 	public Vector2 maxXAndY;		// The maximum x and y coordinates the camera can have.
