@@ -90,9 +90,12 @@ public class Attack : MonoBehaviour {
         if (cooldown_frames > 0)
         {
             cooldown_frames -= 1;
-            transform.Find("Attack_cone_up").GetComponent<PolygonCollider2D>().enabled = false;
-            transform.Find("Attack_cone_down").GetComponent<PolygonCollider2D>().enabled = false ;
-            transform.Find("Attack_cone_forward").GetComponent<PolygonCollider2D>().enabled = false;
+            if (cooldown_frames == 0)
+            {
+                transform.Find("Attack_cone_up").GetComponent<PolygonCollider2D>().enabled = false;
+                transform.Find("Attack_cone_down").GetComponent<PolygonCollider2D>().enabled = false;
+                transform.Find("Attack_cone_forward").GetComponent<PolygonCollider2D>().enabled = false;
+            }
         }
     }
 }
