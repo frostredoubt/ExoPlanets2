@@ -328,11 +328,55 @@ SpriteRenderer:
   m_UseLightProbes: 0
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_SortingLayerID: 40378131
   m_Sprite: {fileID: 21300000, guid: 793b3b0708c404ef29908483aae4999f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &375496508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100040, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 375496509}
+  - 60: {fileID: 375496510}
+  m_Layer: 0
+  m_Name: Attack_cone_down
+  m_TagString: Weapon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &375496509
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400040, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  m_GameObject: {fileID: 375496508}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.20052075, y: -4.37152863, z: 0}
+  m_LocalScale: {x: 6.66666651, y: 6.66666651, z: 6.66666651}
+  m_Children: []
+  m_Father: {fileID: 800203439}
+--- !u!60 &375496510
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6000000, guid: 027fc66f0f344c54fae1ef2803599861,
+    type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  m_GameObject: {fileID: 375496508}
+  m_Enabled: 0
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Poly:
+    m_Paths:
+    - - {x: -.111366272, y: -.172274575}
+      - {x: -.0219316371, y: -.634664476}
+      - {x: -.062828064, y: -1.11380863}
+      - {x: -.124736778, y: -1.06691837}
+      - {x: -.359057426, y: -.165754303}
 --- !u!1 &426607944
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,6 +481,51 @@ Transform:
   m_Children:
   - {fileID: 2072729877}
   m_Father: {fileID: 879360757}
+--- !u!1 &539196833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100038, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 539196834}
+  - 60: {fileID: 539196835}
+  m_Layer: 0
+  m_Name: Attack_cone_up
+  m_TagString: Weapon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &539196834
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400038, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  m_GameObject: {fileID: 539196833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.20052075, y: -4.37152863, z: 0}
+  m_LocalScale: {x: 6.66666651, y: 6.66666651, z: 6.66666651}
+  m_Children: []
+  m_Father: {fileID: 800203439}
+--- !u!60 &539196835
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6000002, guid: 027fc66f0f344c54fae1ef2803599861,
+    type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  m_GameObject: {fileID: 539196833}
+  m_Enabled: 0
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Poly:
+    m_Paths:
+    - - {x: .128950134, y: 1.06447506}
+      - {x: .24783802, y: .978916228}
+      - {x: .429528207, y: .351534873}
+      - {x: .0628271028, y: .163971916}
+      - {x: .0414657742, y: .142333999}
+      - {x: .0512390286, y: .320739776}
 --- !u!1 &592286065
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,6 +578,49 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300014, guid: 1751fbe7e50033545b2513d254b06469, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &719847153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100042, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 719847154}
+  - 60: {fileID: 719847155}
+  m_Layer: 0
+  m_Name: Attack_cone_forward
+  m_TagString: Weapon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &719847154
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400042, guid: 027fc66f0f344c54fae1ef2803599861, type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  m_GameObject: {fileID: 719847153}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.20052075, y: -4.37152863, z: 0}
+  m_LocalScale: {x: 6.66666651, y: 6.66666651, z: 6.66666651}
+  m_Children: []
+  m_Father: {fileID: 800203439}
+--- !u!60 &719847155
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 6000004, guid: 027fc66f0f344c54fae1ef2803599861,
+    type: 2}
+  m_PrefabInternal: {fileID: 244192774}
+  m_GameObject: {fileID: 719847153}
+  m_Enabled: 0
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Poly:
+    m_Paths:
+    - - {x: .622014046, y: .370713264}
+      - {x: .752306044, y: .0907078087}
+      - {x: -.253602028, y: -.186923012}
+      - {x: -.277547836, y: -.0868615881}
 --- !u!1 &800203438
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +654,9 @@ Transform:
   m_Children:
   - {fileID: 1934708233}
   - {fileID: 1755899788}
+  - {fileID: 375496509}
+  - {fileID: 539196834}
+  - {fileID: 719847154}
   m_Father: {fileID: 0}
 --- !u!58 &800203440
 CircleCollider2D:
@@ -612,6 +747,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40fdf962ec22ddc43b6f2949e19c65ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cooldown: 20
+  Deadzone_x: .200000003
+  Deadzone_y: .200000003
 --- !u!1 &879360756
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,10 +1057,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 1227045165}
   - 212: {fileID: 1227045166}
-  - 61: {fileID: 1227045167}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -962,18 +1099,6 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_Sprite: {fileID: 21300000, guid: a2d0239736872dd45bd79e091106f1d1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!61 &1227045167
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6100002, guid: 027fc66f0f344c54fae1ef2803599861,
-    type: 2}
-  m_PrefabInternal: {fileID: 244192774}
-  m_GameObject: {fileID: 1227045164}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Size: {x: .740000308, y: 4.88000202}
-  m_Center: {x: 7.62939453e-06, y: 0}
 --- !u!1 &1229603919
 GameObject:
   m_ObjectHideFlags: 0

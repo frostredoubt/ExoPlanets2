@@ -81,8 +81,8 @@ public class Move : MonoBehaviour {
         Forces.Set(0, 0);
         float x_input = Input.GetAxis("Horizontal");
         Forces.Set(x_input * H_Force, 0);
-		Jump_down = Input.GetButtonDown("Jump");
-		Jump_pressed = Input.GetButton ("Jump");
+        Jump_down = (Input.GetAxis("Jump") > 0.9);
+        Jump_pressed = Jump_down;
     }
 
 	void Set_Velocity()
