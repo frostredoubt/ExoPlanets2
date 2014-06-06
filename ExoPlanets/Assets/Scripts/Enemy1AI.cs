@@ -55,7 +55,6 @@ public class Enemy1AI : MonoBehaviour {
 
 		if (Mathf.Abs (distance.x) > 0.25 && Mathf.Abs (distance.y) < 0.9) {
 			move_away_from_character = !move_away_from_character;
-			Debug.Log("hit wall");
 		}
 		
 	}

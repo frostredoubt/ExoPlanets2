@@ -47,6 +47,9 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private List<GameObject> levelSolidTemplates = null;
 
+	bool cleanupPass = false;
+	float instantiateTime;
+
     #endregion
 
     #region Editor-Exposed Member Variables
@@ -91,6 +94,7 @@ public class LevelGenerator : MonoBehaviour
             }
         }
         GenerateLevel();
+		instantiateTime = Time.time;
         return;
     }
 
@@ -99,7 +103,7 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        GenerateTemplatesCleanupPass(); // Run the cleanup pass to perform any actions requiring dynamic tiles
+        
         return;
     }
 
@@ -376,6 +380,7 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     private void GenerateTemplatesCleanupPass()
     {
+
         for (int i = 0; i < levelTemplateHeight; i += 1)
         {
             for (int j = 0; j < levelTemplateWidth; j += 1)
@@ -573,6 +578,10 @@ public class LevelGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if(Time.time - instantiateTime > 5 && !cleanupPass) {
+			GenerateTemplatesCleanupPass(); // Run the cleanup pass to perform any actions requiring dynamic tiles
+			cleanupPass = true;
+		}
         return;
     }
 

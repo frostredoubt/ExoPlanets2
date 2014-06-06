@@ -34,7 +34,7 @@ public class Attack : MonoBehaviour {
 
         if (Mathf.Abs(attack_x) > Deadzone_x || Mathf.Abs(attack_y) > Deadzone_y)
         {
-            if (attack_trigger < -0.9)
+            if (attack_trigger == 1)
                 Is_fire = true;
         }
     }
@@ -56,11 +56,11 @@ public class Attack : MonoBehaviour {
         if (cross.z > 0)
             attack_angle = 360 - attack_angle;
 
-        Debug.Log(attack_angle);
+        //Debug.Log(attack_angle);
 
         if (Is_fire && cooldown_frames == 0)
         {
-            Debug.Log("fire");
+            //Debug.Log("fire");
             Animator a = GetComponent<Animator>();
             if ((45 < attack_angle) && (attack_angle <= 110))
             {
